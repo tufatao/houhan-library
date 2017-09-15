@@ -1,11 +1,8 @@
 package com.houhan.library.entity
 
 import com.houhan.library.helper.DateUtil
-import java.util.Date
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import java.util.*
+import javax.persistence.*
 
 /**
  * @describe {}<br/>
@@ -18,11 +15,13 @@ data class BorrowRecord(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long,
+        @ManyToOne
         val user: User,
+        @ManyToOne
         val book: Book,
+        var status: Int = AffairStatus.START.code,
         val createTime: Date = DateUtil.curTime()!!,
         var updateTime: Date = createTime,
-        val borrowTime: Date = createTime,
         val returnTime: Date,
-        val shouldReturnTime: Date = DateUtil.addMonth(borrowTime, 1)!!
+        var shouldReturnTime: Date = DateUtil.addMonth(createTime, 1)!!
 )

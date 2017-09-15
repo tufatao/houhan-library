@@ -1,5 +1,7 @@
 package com.houhan.library.control
 
+import com.houhan.library.service.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 import javax.validation.constraints.NotNull
@@ -10,18 +12,25 @@ import javax.validation.constraints.NotNull
  * @date 2017/9/3 16:09
  * @version V0.1
  */
+@RequestMapping("/user")
+@RestController
 class UserController {
 
+    @Autowired
+    internal var userService: UserService? = null
+
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int): ModelAndView {
-        println("user-detail")
-        return ModelAndView()
+    fun detail(@PathVariable @NotNull id: Long): ModelAndView {
+        userService?.one(id)
+        println("user-detail id = ${id}")
+        return ModelAndView("/user/userdetail")
     }
 
     @GetMapping()
-    fun list(@RequestParam status: Int): ModelAndView {
+    fun list(): ModelAndView {
         println("user-list")
-        return ModelAndView()
+        userService?.list()
+        return ModelAndView("/user/userlist")
     }
 
     @PostMapping()

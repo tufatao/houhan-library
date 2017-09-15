@@ -14,18 +14,12 @@ import javax.persistence.Id
  * @version V0.1
  */
 @Entity
-data class Book(
+data class Department(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long,
-        val num: Long,
         val name: String,
-        val author: String,
-        val icon: String,
-        val press: String,
-        var description: String,
-        val category: String,
-        val status: Boolean,
+        val description: String,
         val createTime: Date = DateUtil.curTime()!!,
         var updateTime: Date = createTime
 )

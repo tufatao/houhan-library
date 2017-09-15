@@ -1,11 +1,10 @@
 package com.houhan.library.entity
 
+import com.houhan.library.entity.AffairStatus.START
+import com.houhan.library.entity.ApplyType.BORROW
 import com.houhan.library.helper.DateUtil
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  * @describe {}<br/>
@@ -18,11 +17,15 @@ data class ApplyRecord(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long,
+        @ManyToOne
         val user: User,
+        @ManyToOne
         val book: Book,
+        val type: Int = BORROW.code,
+        var status: Int = START.code,
+        var applyRemark: String,
+        var reviewRemark: String,
         val createTime: Date = DateUtil.curTime()!!,
         var updateTime: Date = createTime,
-        val borrowTime: Date = createTime,
-        val returnTime: Date,
-        val shouldReturnTime: Date = DateUtil.addMonth(borrowTime, 1)!!
-        )
+        var endTime: Date
+)
