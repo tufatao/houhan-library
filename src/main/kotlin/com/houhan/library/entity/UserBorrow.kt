@@ -17,8 +17,8 @@ import javax.persistence.Id
 class UserBorrow {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0
-    val curBorrow: Int = 0
+    var id: Long = 0
+    var curBorrow: Int = 0
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
 }

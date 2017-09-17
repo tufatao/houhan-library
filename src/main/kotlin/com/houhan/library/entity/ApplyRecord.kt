@@ -16,12 +16,12 @@ import javax.persistence.*
 class ApplyRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0
+    var id: Long = 0
     @ManyToOne
-    val user: User? = null
+    lateinit var user: User
     @ManyToOne
-    val book: Book? = null
-    val type: Int = BORROW.code
+    lateinit var book: Book
+    var type: Int = BORROW.code
     var status: Int = START.code
     lateinit var applyRemark: String
     lateinit var reviewRemark: String

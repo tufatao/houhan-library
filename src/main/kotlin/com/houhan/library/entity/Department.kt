@@ -14,7 +14,7 @@ import javax.persistence.*
 class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Int = 0
+    var id: Int = 0
     lateinit var name: String
     lateinit var description: String
     @ManyToOne

@@ -17,7 +17,7 @@ import javax.persistence.Id
 class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Int = 0
+    var id: Int = 0
     lateinit var name: String
     lateinit var description: String
     var totalBorrowNum: Int = 5

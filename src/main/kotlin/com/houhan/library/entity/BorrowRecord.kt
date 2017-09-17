@@ -14,11 +14,11 @@ import javax.persistence.*
 class BorrowRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long = 0
+    var id: Long = 0
     @ManyToOne
-    val user: User? = null
+    var user: User? = null
     @ManyToOne
-    val book: Book? = null
+    var book: Book? = null
     var status: Int = AffairStatus.START.code
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime

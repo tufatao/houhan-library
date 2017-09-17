@@ -14,11 +14,11 @@ import javax.persistence.*
 class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Int = 0
+    var id: Int = 0
     lateinit var name: String
     lateinit var description: String
     @ManyToOne
-    val parentCat: Category? = null
+    var parentCat: Category? = null
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
 }
