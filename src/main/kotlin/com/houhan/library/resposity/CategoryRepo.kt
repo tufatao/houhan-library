@@ -1,6 +1,6 @@
 package com.houhan.library.resposity
 
-import com.houhan.library.entity.Department
+import com.houhan.library.entity.Category
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
  * @version V0.1
  */
 @Repository
-interface DepartmentRepo : JpaRepository<Department, Int> {
-    //    fun findByIdCardNum(@Param("idCardNum") idCardNum: String): User
-    fun findByName(@Param("name") name: String): Department?
+interface CategoryRepo : JpaRepository<Category, Int> {
+    fun findByName(@Param("name") name: String): Category
 }

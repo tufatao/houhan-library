@@ -11,26 +11,14 @@ import javax.persistence.*
  * @version V0.1
  */
 @Entity
-class User {
+class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = 0
+    val id: Int = 0
     lateinit var name: String
-    lateinit var pw: String
-    var sex: Int = 0
-    //生日
-    lateinit var birth: String
-    lateinit var mobile: String
-    //所属部门
+    lateinit var description: String
     @ManyToOne
-    lateinit var department: Department
-    lateinit var keyword: String
-    //职位
-    var position: String = "default"
-    @OneToOne
-    var userBorrow: UserBorrow = UserBorrow()
+    val parentCat: Category? = null
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
-    @ManyToOne
-    lateinit var role: Role
 }

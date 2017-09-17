@@ -14,31 +14,32 @@ import org.springframework.stereotype.Service
  */
 @Service
 class UserServiceImpl : UserService {
-
     @Autowired
-    internal var userRepo: UserRepo? = null
+    internal lateinit var userRepo: UserRepo
+
+    override fun save(user: User): User {
+        return userRepo.saveAndFlush(user)
+    }
 
     override fun one(id: Long): User? {
-        return userRepo?.findOne(id)
+        val user: User? = userRepo.findOne(id)
+        return user
     }
 
-    override fun list(): List<User>? {
-        return userRepo?.findAll()
+    override fun list(): List<User> {
+        return userRepo.findAll() ?: ArrayList()
     }
 
-    override fun one(name: String): User {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun one(name: String): User? {
+        val user: User? = userRepo.findByName(name)
+        return user
+    }
+
+    override fun delete(id: Long) {
+        userRepo.delete(id)
     }
 
     override fun pw(name: String): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updata(user: User) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun delete(user: User) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

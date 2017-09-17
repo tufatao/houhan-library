@@ -1,10 +1,12 @@
 package com.houhan.library.control
 
+import com.houhan.library.entity.Department
+import com.houhan.library.service.DepartmentService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.ModelAndView
 
 /**
  * @describe {}<br/>
@@ -13,24 +15,27 @@ import org.springframework.web.servlet.ModelAndView
  * @version V0.1
  */
 @RequestMapping("/sign")
-@RestController
+@Controller
 class SignController{
-
+    @Autowired
+    internal val departmentService: DepartmentService? = null
     @GetMapping("/signup")
-    fun signup(@RequestParam status : Int): ModelAndView {
+    fun signup(model: Model): String {
         println("sign-signup")
-        return ModelAndView()
+        val deptList: List<Department> = departmentService?.list()!!
+        model.addAttribute("deptList", deptList)
+        return "signup"
     }
 
     @GetMapping("/findpw")
-    fun findPw(@RequestParam status : Int): ModelAndView {
+    fun findPw(): String {
         println("sign-findPw")
-        return ModelAndView()
+        return "findpw"
     }
 
-    @GetMapping("/signin")
-    fun signin(@RequestParam status : Int): ModelAndView {
-        println("sign-signin")
-        return ModelAndView()
+    @GetMapping("/login")
+    fun signin(): String {
+        println("sign-login")
+        return "login"
     }
 }

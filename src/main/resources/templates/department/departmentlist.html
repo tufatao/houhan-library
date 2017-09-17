@@ -2,23 +2,23 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>用户列表</title>
+    <title>Title</title>
 </head>
 <body>
-
+<h3>部门列表</h3>
 <table>
     <thead>
     <th>
     <td>id</td>
     <td>name</td>
-    <td>department</td>
+    <td>description</td>
     </th>
     </thead>
     <tbody>
-    <tr th:each="user: ${userList}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.department.name}"></td>
+    <tr th:each="dept: ${deptList}">
+        <td th:text="${dept.id}"></td>
+        <td th:text="${dept.name}"></td>
+        <td th:text="${dept.description}"></td>
     </tr>
     </tbody>
 </table>

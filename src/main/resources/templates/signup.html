@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
-
+<!--<form action="/user" th:action="@{/user}" method="post">-->
+<!--<span>用户名</span><input name="name" th:field="*{name}"/>-->
+<!--&lt;!&ndash;<span>密码</span><input type="password" th:field="*{pw}"/>&ndash;&gt;-->
+<!--<span>重复密码</span><input type="password" name="confirm_pw"/>-->
+<!--<span>性别</span><input name="sex" th:field="*{sex}"/>-->
+<!--<span>生日</span><input name="birth" th:field="*{birth}" value="1993-01-20"/>-->
+<!--<span>手机</span><input name="mobile" th:field="*{mobile}" value="18111111111"/>-->
+<!--<span>部门</span>-->
+<!--<select name="deptId" th:each="dept: ${deptList}">-->
+<!--<option th:value="${dept.id}">aa</option>-->
+<!--&lt;!&ndash;<option th:value="${dept.id}">${dept.name}</option>&ndash;&gt;-->
+<!--</select>-->
+<!--<span>职位</span><input name="position" th:field="*{position}" value="java开发"/>-->
+<form action="/user" th:action="@{/user}" method="post">
+    <span>用户名</span><input name="name"/>
+    <span>密码</span><input type="password" name="pw"/>
+    <span>重复密码</span><input type="password" name="confirm_pw"/>
+    <span>性别</span><input name="sex"/>
+    <span>生日</span><input name="birth" value="1993-01-20"/>
+    <span>手机</span><input name="mobile" value="18111111111"/>
+    <span>部门</span>
+    <select name="deptId">
+        <option th:each="dept: ${deptList}" th:value="${dept.id}" th:text="${dept.name}"></option>
+    </select>
+    <span>职位</span><input name="position" value="java开发"/>
+    <input type="submit" name="确认"/>
+</form>
 </body>
 </html>

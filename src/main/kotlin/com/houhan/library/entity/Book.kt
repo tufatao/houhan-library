@@ -2,10 +2,7 @@ package com.houhan.library.entity
 
 import com.houhan.library.helper.DateUtil
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  * @describe {}<br/>
@@ -14,18 +11,20 @@ import javax.persistence.Id
  * @version V0.1
  */
 @Entity
-data class Book(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        val num: Long,
-        val name: String,
-        val author: String,
-        val icon: String,
-        val press: String,
-        var description: String,
-        val category: String,
-        val status: Boolean,
-        val createTime: Date = DateUtil.curTime()!!,
-        var updateTime: Date = createTime
-)
+class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    var id: Long = 0
+    var num: Long = id
+    var name: String = ""
+    var author: String = ""
+    lateinit var icon: String
+    var press: String = ""
+    lateinit var description: String
+    @ManyToOne
+    lateinit var category: Category
+    lateinit var keyword: String
+    var status: Boolean = false
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+}

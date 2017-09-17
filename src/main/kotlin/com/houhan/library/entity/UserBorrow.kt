@@ -1,6 +1,7 @@
 package com.houhan.library.entity
 
-import java.util.Date
+import com.houhan.library.helper.DateUtil
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -13,12 +14,11 @@ import javax.persistence.Id
  * @version V0.1
  */
 @Entity
-data class UserBorrow(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        val curBorrow: Int,
-        val totalBorrow: Int = 5,
-        val createTime: Date,
-        var updateTime: Date
-)
+class UserBorrow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long = 0
+    val curBorrow: Int = 0
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+}

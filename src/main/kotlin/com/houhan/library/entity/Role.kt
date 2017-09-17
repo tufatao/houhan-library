@@ -1,7 +1,7 @@
 package com.houhan.library.entity
 
 import com.houhan.library.helper.DateUtil
-import java.util.Date
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,13 +14,14 @@ import javax.persistence.Id
  * @version V0.1
  */
 @Entity
-data class Role(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        val name: String = "userA",
-        val totalBorrowNum: Int = 5,
-        val privilege: String = "*",
-        val createTime: Date = DateUtil.curTime()!!,
-        var updateTime: Date = createTime
-)
+class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Int = 0
+    lateinit var name: String
+    lateinit var description: String
+    var totalBorrowNum: Int = 5
+    var privilege: String = ""
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+}

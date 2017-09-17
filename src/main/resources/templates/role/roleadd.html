@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3>添加角色</h3>
+<form action="/user" th:action="@{/role}" method="post">
+    <!--新秀、少侠、大侠、掌门、宗师、盟主-->
+    <!--小白、书童、秀才、举人、进士、状元-->
+    <span>角色</span><input name="name" value="新秀"/>
+    <span>角色简介</span><input name="description" value="新秀, 初级"/>
+    <!--<form action="/user" th:action="@{/department}" th:object="${user}" method="post">-->
+    <!--<span>部门</span><input name="name" th:field="*{name}"/>-->
+    <!--<span>部门简介</span><input name="description" th:field="*{description}"/>-->
+    <!--<span>职位</span><input name="position" th:field="*{position}" value="java开发"/>-->
+    <input type="submit" name="确认"/>
+</form>
+</body>
+</html>

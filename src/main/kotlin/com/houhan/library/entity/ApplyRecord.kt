@@ -13,19 +13,19 @@ import javax.persistence.*
  * @version V0.1
  */
 @Entity
-data class ApplyRecord(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        @ManyToOne
-        val user: User,
-        @ManyToOne
-        val book: Book,
-        val type: Int = BORROW.code,
-        var status: Int = START.code,
-        var applyRemark: String,
-        var reviewRemark: String,
-        val createTime: Date = DateUtil.curTime()!!,
-        var updateTime: Date = createTime,
-        var endTime: Date
-)
+class ApplyRecord {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long = 0
+    @ManyToOne
+    val user: User? = null
+    @ManyToOne
+    val book: Book? = null
+    val type: Int = BORROW.code
+    var status: Int = START.code
+    lateinit var applyRemark: String
+    lateinit var reviewRemark: String
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+    lateinit var endTime: Date
+}

@@ -1,9 +1,15 @@
 package com.houhan.library.control
 
+import com.houhan.library.entity.Book
+import com.houhan.library.entity.Category
+import com.houhan.library.service.BookService
+import com.houhan.library.service.CategoryService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.ModelAndView
 import javax.validation.constraints.NotNull
 
 /**
@@ -13,34 +19,66 @@ import javax.validation.constraints.NotNull
  * @version V0.1
  */
 @RequestMapping("/book")
-@RestController
+@Controller
 class BookController{
-//    val log: Logger = LoggerFactory.getLogger
+    val log: Logger = LoggerFactory.getLogger(BookController::class.java)
+    @Autowired
+    lateinit var categoryService: CategoryService
+    @Autowired
+    lateinit var bookService: BookService
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id : Int): ModelAndView {
+    fun detail(@PathVariable @NotNull id: Long, model: Model): String {
+        var result = ""
         println("book-detail")
-        return ModelAndView()
+        val book: Book? = bookService.one(id)
+        book?.let {
+            model.addAttribute("book", book)
+            result = "/book/booklist"
+        } ?: log.info("book-detail: Book(id = $id) not found")
+        return result
     }
 
     @GetMapping()
-    fun list(@RequestParam status : Int): ModelAndView {
+    fun list(model: Model): String {
         println("book-list")
-        return ModelAndView()
+        val bookList: List<Book> = bookService.list()
+        model.addAttribute("bookList", bookList)
+        return "/book/booklist"
     }
+
     @PostMapping()
-    fun save(@PathVariable id : Int): ModelAndView {
+    fun save(@ModelAttribute @NotNull book: Book,
+             @RequestParam catId: Int,
+             model: Model): String {
         println("book-save")
-        return ModelAndView()
+        book.category = categoryService.one(catId)!!
+        val book: Book? = bookService.save(book)
+        book?.let {
+            model.addAttribute("book", book)
+            return "redirect:/book"
+        } ?: log.info("book-save: Book not found")
+        return ""
     }
+
     @PutMapping()
-    fun update(@PathVariable id : Int): ModelAndView {
+    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
         println("book-update")
-        return ModelAndView()
+        return "redirect:/book"
     }
+
     @DeleteMapping()
-    fun delete(@PathVariable id : Int): ModelAndView {
+    fun delete(@PathVariable id: Long): String {
         println("book-delete")
-        return ModelAndView()
+        bookService.delete(id)
+        return "redirect:/book"
+    }
+
+    @GetMapping("/toadd")
+    fun toAdd(model: Model): String {
+        println("book-toAdd")
+        val categoryList: List<Category> = categoryService.list()
+        model.addAttribute("categoryList", categoryList)
+        return "/book/bookadd"
     }
 }

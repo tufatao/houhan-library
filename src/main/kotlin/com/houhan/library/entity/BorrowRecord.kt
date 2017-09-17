@@ -11,17 +11,17 @@ import javax.persistence.*
  * @version V0.1
  */
 @Entity
-data class BorrowRecord(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        @ManyToOne
-        val user: User,
-        @ManyToOne
-        val book: Book,
-        var status: Int = AffairStatus.START.code,
-        val createTime: Date = DateUtil.curTime()!!,
-        var updateTime: Date = createTime,
-        val returnTime: Date,
-        var shouldReturnTime: Date = DateUtil.addMonth(createTime, 1)!!
-)
+class BorrowRecord {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long = 0
+    @ManyToOne
+    val user: User? = null
+    @ManyToOne
+    val book: Book? = null
+    var status: Int = AffairStatus.START.code
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+    lateinit var returnTime: Date
+    var shouldReturnTime: Date = DateUtil.addMonth(createTime, 1)!!
+}

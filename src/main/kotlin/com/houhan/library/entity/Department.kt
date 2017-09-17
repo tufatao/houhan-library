@@ -2,10 +2,7 @@ package com.houhan.library.entity
 
 import com.houhan.library.helper.DateUtil
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  * @describe {}<br/>
@@ -14,12 +11,14 @@ import javax.persistence.Id
  * @version V0.1
  */
 @Entity
-data class Department(
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
-        val name: String,
-        val description: String,
-        val createTime: Date = DateUtil.curTime()!!,
-        var updateTime: Date = createTime
-)
+class Department {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Int = 0
+    lateinit var name: String
+    lateinit var description: String
+    @ManyToOne
+    lateinit var parentDept: Department
+    val createTime: Date = DateUtil.curTime()!!
+    var updateTime: Date = createTime
+}

@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository
  */
 @Repository
 interface BorrowRecordRepo : JpaRepository<BorrowRecord, Long> {
-//    fun findByIdCardNum(@Param("idCardNum") idCardNum: String): User
+    //    fun findByIdCardNum(@Param("idCardNum") idCardNum: String): User
 }

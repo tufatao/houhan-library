@@ -5,20 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<h3>图书列表</h3>
+<h3>申请列表</h3>
 <table>
     <thead>
     <th>
     <td>id</td>
-    <td>name</td>
-    <td>description</td>
+    <td>user</td>
+    <td>book</td>
     </th>
     </thead>
     <tbody>
-    <tr th:each="book: ${bookList}">
-        <td th:text="${book.id}"></td>
-        <td th:text="${book.name}"></td>
-        <td th:text="${book.description}"></td>
+    <tr th:each="apply: ${applyList}">
+        <td th:text="${apply.id}"></td>
+        <td th:text="${apply.user.name}"></td>
+        <td th:text="${apply.book.name}"></td>
     </tr>
     </tbody>
 </table>

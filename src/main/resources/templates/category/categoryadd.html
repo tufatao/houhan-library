@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3>添加图书类目</h3>
+<form action="/user" th:action="@{/category}" method="post">
+    <span>图书类别</span><input name="name" value="文学"/>
+    <span>类别简介</span><input name="description" value="文学"/>
+    <!--<form action="/user" th:action="@{/department}" th:object="${user}" method="post">-->
+    <!--<span>部门</span><input name="name" th:field="*{name}"/>-->
+    <!--<span>部门简介</span><input name="description" th:field="*{description}"/>-->
+    <!--<span>职位</span><input name="position" th:field="*{position}" value="java开发"/>-->
+    <input type="submit" name="确认"/>
+</form>
+</body>
+</html>
