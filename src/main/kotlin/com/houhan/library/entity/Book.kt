@@ -16,10 +16,10 @@ class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long = 0
     var num: Long = id
-    var name: String = ""
-    var author: String = ""
+    lateinit var name: String
+    lateinit var author: String
     lateinit var icon: String
-    var press: String = ""
+    lateinit var press: String
     lateinit var description: String
     @ManyToOne
     lateinit var category: Category

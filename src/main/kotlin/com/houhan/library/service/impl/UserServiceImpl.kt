@@ -4,6 +4,8 @@ import com.houhan.library.entity.User
 import com.houhan.library.resposity.UserRepo
 import com.houhan.library.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +28,10 @@ class UserServiceImpl : UserService {
         return user
     }
 
-    override fun list(): List<User> {
-        return userRepo.findAll() ?: ArrayList()
+    override fun list(page: Pageable): Page<User> {
+//        return userRepo.findAll() ?: ArrayList()
+        val userPage: Page<User> = userRepo.findAll(page)
+        return userPage
     }
 
     override fun one(name: String): User? {

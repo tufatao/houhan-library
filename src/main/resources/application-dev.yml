@@ -4,7 +4,7 @@ spring:
       repositories:
         enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/houhan_library
+    url: jdbc:mysql://localhost:3306/houhan_library_test
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver

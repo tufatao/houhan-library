@@ -8,6 +8,9 @@ import com.houhan.library.service.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -49,7 +52,9 @@ class UserController {
     @GetMapping()
     fun list(model: Model): String {
         println("user-list")
-        val userList: List<User> = userService.list()
+        val pageSize = 10
+        val page: Pageable = PageRequest(1, pageSize)
+        val userList: Page<User> = userService.list(page)
         model.addAttribute("userList", userList)
         return "/user/userlist"
     }

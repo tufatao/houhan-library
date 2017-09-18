@@ -1,7 +1,7 @@
 package com.houhan.library.entity
 
-import com.houhan.library.entity.AffairStatus.START
-import com.houhan.library.entity.ApplyType.BORROW
+import com.houhan.library.element.AffairStatus.START
+import com.houhan.library.element.ApplyType.BORROW
 import com.houhan.library.helper.DateUtil
 import java.util.*
 import javax.persistence.*

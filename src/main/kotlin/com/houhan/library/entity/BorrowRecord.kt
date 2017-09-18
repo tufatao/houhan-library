@@ -1,5 +1,6 @@
 package com.houhan.library.entity
 
+import com.houhan.library.element.AffairStatus
 import com.houhan.library.helper.DateUtil
 import java.util.*
 import javax.persistence.*
@@ -16,9 +17,9 @@ class BorrowRecord {
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long = 0
     @ManyToOne
-    var user: User? = null
+    lateinit var user: User
     @ManyToOne
-    var book: Book? = null
+    lateinit var book: Book
     var status: Int = AffairStatus.START.code
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime

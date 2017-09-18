@@ -26,7 +26,7 @@ class User {
     lateinit var department: Department
     lateinit var keyword: String
     //职位
-    var position: String = "default"
+    lateinit var position: String
     @OneToOne
     var userBorrow: UserBorrow = UserBorrow()
     val createTime: Date = DateUtil.curTime()!!
