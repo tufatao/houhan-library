@@ -17,7 +17,7 @@ interface ApplyRecordService {
     @Transactional
     fun save(applyRecord: ApplyRecord): ApplyRecord?
 
-    //    fun delete(applyRecord: ApplyRecord)
+    //    fun delete(apply: ApplyRecord)
     @Transactional
     fun delete(id: Long)
 }

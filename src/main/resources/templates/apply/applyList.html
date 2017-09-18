@@ -12,13 +12,19 @@
     <td>id</td>
     <td>user</td>
     <td>book</td>
+    <td>status</td>
+    <td>type</td>
+    <td>startTime</td>
     </th>
     </thead>
     <tbody>
-    <tr th:each="apply: ${applyList}">
+    <tr th:each="apply: ${applyRecordList}">
         <td th:text="${apply.id}"></td>
         <td th:text="${apply.user.name}"></td>
         <td th:text="${apply.book.name}"></td>
+        <td th:text="${apply.status}"></td>
+        <td th:text="${apply.type}"></td>
+        <td th:text="${apply.createTime}"></td>
     </tr>
     </tbody>
 </table>

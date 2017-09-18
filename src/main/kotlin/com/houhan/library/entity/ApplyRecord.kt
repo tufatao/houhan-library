@@ -21,10 +21,12 @@ class ApplyRecord {
     lateinit var user: User
     @ManyToOne
     lateinit var book: Book
+    @OneToOne
+    var borrowRecord: BorrowRecord? = null
     var type: Int = BORROW.code
     var status: Int = START.code
-    lateinit var applyRemark: String
-    lateinit var reviewRemark: String
+    var applyRemark: String = ""
+    var reviewRemark: String = ""
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
     lateinit var endTime: Date

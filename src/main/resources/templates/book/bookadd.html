@@ -12,7 +12,7 @@
     <span>作者</span><input name="author" value="Tobby"/>
     <span>出版社</span><input name="press" value="Pearson"/>
     <span>分类</span>
-    <select name="categoryId">
+    <select name="catId">
         <option th:each="category: ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
     </select>
     <span>简介</span><input type="text" name="description" value="Kotlin Something"/>

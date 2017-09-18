@@ -31,8 +31,8 @@ class ApplyRecordServiceImpl : ApplyRecordService {
     }
 
 //    override fun one(name: String): ApplyRecord? {
-//        val applyRecord: ApplyRecord? = applyRecordRepo.findByName(name)
-//        return applyRecord
+//        val apply: ApplyRecord? = applyRecordRepo.findByName(name)
+//        return apply
 //    }
 
     override fun delete(id: Long) {

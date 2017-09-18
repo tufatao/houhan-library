@@ -7,5 +7,5 @@ package com.houhan.library.element
  * @version V0.1
  */
 enum class AffairStatus(val code: Int) {
-    START(1), REVIEWED(2), RUNNING(3), DONE(0)
+    START(1), REVIEWING(2), PASSED(3), REJECT(4), DONE(5)
 }

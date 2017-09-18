@@ -12,6 +12,7 @@
     <td>id</td>
     <td>name</td>
     <td>description</td>
+    <td>operation</td>
     </th>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
         <td th:text="${book.id}"></td>
         <td th:text="${book.name}"></td>
         <td th:text="${book.description}"></td>
+        <td><a type="button" th:href="@{/apply/6/{bookId}(bookId=${book.id})}">申请借阅</a></td>
     </tr>
     </tbody>
 </table>

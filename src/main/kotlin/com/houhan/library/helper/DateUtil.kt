@@ -1,6 +1,7 @@
 package com.houhan.library.helper
 
 import java.util.*
+import javax.validation.constraints.NotNull
 
 /**
  * Created by Administrator on 2017/9/5.
@@ -14,14 +15,14 @@ class DateUtil {
         /**
          * 当前时间
          */
-        fun curTime(): Date? {
+        fun curTime(): Date {
             return Date()
         }
 
         /**
          * years before or after
          */
-        fun addYear(date: Date, years: Int): Date? {
+        fun addYear(@NotNull date: Date, @NotNull years: Int): Date {
             calender.time = date
             calender.add(Calendar.YEAR, years)
             return calender.time
@@ -30,7 +31,7 @@ class DateUtil {
         /**
          * monthes before or after
          */
-        fun addMonth(date: Date, monthes: Int): Date? {
+        fun addMonth(@NotNull date: Date, @NotNull monthes: Int): Date {
             calender.time = date
             calender.add(Calendar.MONTH, monthes)
             return calender.time
@@ -39,7 +40,7 @@ class DateUtil {
         /**
          * weeks before or after
          */
-        fun addWeek(date: Date, weeks: Int): Date? {
+        fun addWeek(@NotNull date: Date, @NotNull weeks: Int): Date {
             calender.time = date
             calender.add(Calendar.WEEK_OF_YEAR, weeks)
             return calender.time
@@ -48,7 +49,7 @@ class DateUtil {
         /**
          * days before or after
          */
-        fun addDays(date: Date, days: Int): Date? {
+        fun addDays(@NotNull date: Date, @NotNull days: Int): Date {
             calender.time = date
             calender.add(Calendar.DATE, days)
             return calender.time
