@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull
  */
 @RequestMapping("/book")
 @Controller
-class BookController{
+class BookController {
     val log: Logger = LoggerFactory.getLogger(BookController::class.java)
     @Autowired
     lateinit var categoryService: CategoryService

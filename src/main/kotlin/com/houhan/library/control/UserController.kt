@@ -49,13 +49,19 @@ class UserController {
         return result
     }
 
-    @GetMapping()
-    fun list(model: Model): String {
+    @GetMapping("/{pageIndex}/{pageSize}")
+    fun list(
+            @PathVariable pageIndex: Int = 1,
+            @PathVariable pageSize: Int = 10,
+            model: Model): String {
         println("user-list")
-        val pageSize = 10
-        val page: Pageable = PageRequest(1, pageSize)
-        val userList: Page<User> = userService.list(page)
-        model.addAttribute("userList", userList)
+        var pageSizeTemp = pageSize
+        if (pageSizeTemp > 30) {
+            pageSizeTemp = 10
+        }
+        val page: Pageable = PageRequest(pageIndex - 1, pageSizeTemp)
+        val userPage: Page<User> = userService.list(page)
+        model.addAttribute("userPage", userPage)
         return "/user/userlist"
     }
 

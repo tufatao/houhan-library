@@ -15,12 +15,18 @@
     </th>
     </thead>
     <tbody>
-    <tr th:each="user: ${userList}">
+    <tr th:each="user: ${userPage.content}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.name}"></td>
         <td th:text="${user.department.name}"></td>
     </tr>
     </tbody>
 </table>
+<p>
+    <!--<span th:text="共{totalNum}(totalNum=${userPage.total}})"></span>-->
+    <span th:text="${'共'+userPage.getTotalPages()+'页'}"></span>
+    <span th:text="${'共'+userPage.getTotalElements()+'条'}"></span>
+    <a>上一页</a><a th:href="@{/user}">下一页</a>
+</p>
 </body>
 </html>

@@ -20,4 +20,7 @@ interface ApplyRecordService {
     //    fun delete(apply: ApplyRecord)
     @Transactional
     fun delete(id: Long)
+
+    fun handleApply(applyId: Long, result: Int, reviewRemark: String, userId: Long, bookId: Long): ApplyRecord
+    fun lanchApply(type: Int, applyRemark: String, userId: Long, bookId: Long, borrowId: Long): ApplyRecord
 }

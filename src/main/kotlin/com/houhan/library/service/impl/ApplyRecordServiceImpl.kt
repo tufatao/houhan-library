@@ -1,8 +1,17 @@
 package com.houhan.library.service.impl
 
+import com.houhan.library.element.AffairStatus
+import com.houhan.library.element.ApplyType
 import com.houhan.library.entity.ApplyRecord
+import com.houhan.library.entity.BorrowRecord
+import com.houhan.library.helper.DateUtil
 import com.houhan.library.resposity.ApplyRecordRepo
+import com.houhan.library.resposity.BookRepo
+import com.houhan.library.resposity.BorrowRecordRepo
+import com.houhan.library.resposity.UserRepo
 import com.houhan.library.service.ApplyRecordService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -14,6 +23,76 @@ import org.springframework.stereotype.Service
  */
 @Service
 class ApplyRecordServiceImpl : ApplyRecordService {
+    val log: Logger = LoggerFactory.getLogger(ApplyRecordServiceImpl::class.java)
+    @Autowired
+    lateinit var borrowRecordRepo: BorrowRecordRepo
+    @Autowired
+    lateinit var userRepo: UserRepo
+    @Autowired
+    lateinit var bookRepo: BookRepo
+
+    /**
+     * 发起申请
+     */
+    override fun lanchApply(type: Int, applyRemark: String, userId: Long, bookId: Long, borrowId: Long): ApplyRecord {
+        val applyRecord: ApplyRecord = ApplyRecord()
+        applyRecord.type = type
+        applyRecord.applyRemark = applyRemark
+        when (type) {
+            ApplyType.BUY.code -> {
+                applyRecord.user = userRepo.findOne(userId)!!
+            }
+            ApplyType.BORROW.code -> {
+                applyRecord.user = userRepo.findOne(userId)!!
+                applyRecord.book = bookRepo.findOne(bookId)!!
+            }
+            ApplyType.DELAY.code, ApplyType.RETURN.code -> {
+                val borrowRecord: BorrowRecord = borrowRecordRepo.findOne(borrowId)
+                applyRecord.borrowRecord = borrowRecord
+                applyRecord.user = borrowRecord.user
+                applyRecord.book = borrowRecord.book
+            }
+        }
+        save(applyRecord)
+
+        return applyRecord
+    }
+
+    /**
+     * 处理申请
+     */
+    override fun handleApply(applyId: Long, result: Int, reviewRemark: String, userId: Long, bookId: Long): ApplyRecord {
+        val applyRecord: ApplyRecord = one(applyId)!!
+        applyRecord.applyRemark = reviewRemark
+        applyRecord.status = result
+
+        if (result == AffairStatus.PASSED.code) {
+            val type = applyRecord.type
+            when (type) {
+                ApplyType.BUY.code -> {
+                    log.info("人家申请买书啦, 赶紧处理哟!")
+                }
+                ApplyType.BORROW.code -> {
+                    val borrowRecord: BorrowRecord = BorrowRecord()
+                    borrowRecord.user = userRepo.findOne(userId)!!
+                    borrowRecord.book = bookRepo.findOne(bookId)!!
+                    borrowRecordRepo.save(borrowRecord)
+                }
+                ApplyType.DELAY.code -> {
+                    val borrowRecord: BorrowRecord = applyRecord.borrowRecord!!
+                    borrowRecord.shouldReturnTime = DateUtil.addMonth(borrowRecord.shouldReturnTime, 1)
+                    borrowRecordRepo.save(borrowRecord)
+                }
+                ApplyType.RETURN.code -> {
+                    val borrowRecord: BorrowRecord = applyRecord.borrowRecord!!
+                    borrowRecord.status = AffairStatus.DONE.code
+                    borrowRecordRepo.save(borrowRecord)
+                }
+            }
+        }
+        return applyRecord
+    }
+
     @Autowired
     internal lateinit var applyRecordRepo: ApplyRecordRepo
 
