@@ -26,7 +26,9 @@ import javax.validation.constraints.NotNull
 @RequestMapping("/user")
 @Controller
 class UserController {
-    val log: Logger = LoggerFactory.getLogger(UserController::class.java)
+    //    val log: Logger = LoggerFactory.getLogger(UserController::class.java)
+    val log: Logger = LoggerFactory.getLogger(Thread.currentThread().javaClass)
+//    val log: Logger = LoggerFactory.getLogger(Thread.currentThread().stackTrace::class.java)
 
     @Autowired
     internal lateinit var userBorrowRepo: UserBorrowRepo

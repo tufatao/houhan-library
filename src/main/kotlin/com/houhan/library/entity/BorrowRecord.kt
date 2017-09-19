@@ -23,6 +23,6 @@ class BorrowRecord {
     var status: Int = AffairStatus.START.code
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
-    lateinit var returnTime: Date
+    var returnTime: Date? = null
     var shouldReturnTime: Date = DateUtil.addMonth(createTime, 1)!!
 }

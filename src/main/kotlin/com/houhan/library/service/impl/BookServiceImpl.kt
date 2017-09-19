@@ -4,6 +4,8 @@ import com.houhan.library.entity.Book
 import com.houhan.library.resposity.BookRepo
 import com.houhan.library.service.BookService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +28,8 @@ class BookServiceImpl : BookService {
         return book
     }
 
-    override fun list(): List<Book> {
-        return bookRepo.findAll() ?: ArrayList()
+    override fun list(pageable: Pageable): Page<Book> {
+        return bookRepo.findAll(pageable)
     }
 
     override fun one(name: String): Book? {

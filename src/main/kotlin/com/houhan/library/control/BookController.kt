@@ -7,6 +7,9 @@ import com.houhan.library.service.CategoryService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -40,10 +43,18 @@ class BookController {
     }
 
     @GetMapping()
-    fun list(model: Model): String {
+    fun list(
+            @PathVariable pageIndex: Int = 1,
+            @PathVariable pageSize: Int = 10,
+            model: Model): String {
         println("book-list")
-        val bookList: List<Book> = bookService.list()
-        model.addAttribute("bookList", bookList)
+        var pageSizeTemp = pageSize
+        if (pageSizeTemp > 30) {
+            pageSizeTemp = 10
+        }
+        val page: Pageable = PageRequest(pageIndex - 1, pageSizeTemp)
+        val bookPage: Page<Book> = bookService.list(page)
+        model.addAttribute("bookPage", bookPage)
         return "/book/booklist"
     }
 

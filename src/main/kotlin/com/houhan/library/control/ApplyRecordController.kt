@@ -1,13 +1,13 @@
 package com.houhan.library.control
 
 import com.houhan.library.entity.ApplyRecord
-import com.houhan.library.resposity.BookRepo
-import com.houhan.library.resposity.BorrowRecordRepo
-import com.houhan.library.resposity.UserRepo
 import com.houhan.library.service.ApplyRecordService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -25,12 +25,6 @@ class ApplyRecordController {
     val log: Logger = LoggerFactory.getLogger(ApplyRecordController::class.java)
     @Autowired
     lateinit var applyRecordService: ApplyRecordService
-    @Autowired
-    lateinit var borrowRecordRepo: BorrowRecordRepo
-    @Autowired
-    lateinit var userRepo: UserRepo
-    @Autowired
-    lateinit var bookRepo: BookRepo
 
     /**
      * 处理申请
@@ -77,22 +71,19 @@ class ApplyRecordController {
     }
 
     @GetMapping()
-    fun list(model: Model): String {
-        println("apply-list")
-        val applyRecordList: List<ApplyRecord> = applyRecordService.list()
-        model.addAttribute("applyRecordList", applyRecordList)
+    fun list(
+            @PathVariable pageIndex: Int = 1,
+            @PathVariable pageSize: Int = 10,
+            model: Model): String {
+        println("user-list")
+        var pageSizeTemp = pageSize
+        if (pageSizeTemp > 30) {
+            pageSizeTemp = 10
+        }
+        val page: Pageable = PageRequest(pageIndex - 1, pageSizeTemp)
+        val applyPage: Page<ApplyRecord> = applyRecordService.list(page)
+        model.addAttribute("applyPage", applyPage)
         return "/apply/applyList"
-    }
-
-    @PostMapping()
-    fun save(@ModelAttribute @NotNull applyRecord: ApplyRecord, model: Model): String {
-        println("apply-save")
-        val applyRecord: ApplyRecord? = applyRecordService.save(applyRecord)
-        applyRecord?.let {
-            model.addAttribute("apply", applyRecord)
-            return "redirect:/apply"
-        } ?: log.info("apply-save: ApplyRecord not found")
-        return ""
     }
 
     @PutMapping()

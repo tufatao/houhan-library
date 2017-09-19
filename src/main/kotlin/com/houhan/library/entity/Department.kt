@@ -18,7 +18,7 @@ class Department {
     lateinit var name: String
     lateinit var description: String
     @ManyToOne
-    lateinit var parentDept: Department
+    var parentDept: Department? = null
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
 }

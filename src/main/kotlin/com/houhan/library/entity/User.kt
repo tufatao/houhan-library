@@ -24,7 +24,7 @@ class User {
     //所属部门
     @ManyToOne
     lateinit var department: Department
-    lateinit var keyword: String
+    var keyword: String = ""
     //职位
     lateinit var position: String
     @OneToOne

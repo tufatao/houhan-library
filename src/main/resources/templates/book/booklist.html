@@ -16,7 +16,7 @@
     </th>
     </thead>
     <tbody>
-    <tr th:each="book: ${bookList}">
+    <tr th:each="book: ${bookPage.content}">
         <td th:text="${book.id}"></td>
         <td th:text="${book.name}"></td>
         <td th:text="${book.description}"></td>
@@ -24,5 +24,11 @@
     </tr>
     </tbody>
 </table>
+<p>
+    <!--<span th:text="共{totalNum}(totalNum=${userPage.total}})"></span>-->
+    <span th:text="${'共'+bookPage.getTotalPages()+'页'}"></span>
+    <span th:text="${'共'+bookPage.getTotalElements()+'条'}"></span>
+    <a>上一页</a><a th:href="@{/book}">下一页</a>
+</p>
 </body>
 </html>

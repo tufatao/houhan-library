@@ -1,6 +1,8 @@
 package com.houhan.library.service
 
 import com.houhan.library.entity.Book
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import javax.transaction.Transactional
 
 /**
@@ -10,7 +12,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface BookService {
-    fun list(): List<Book>
+    fun list(pageable: Pageable): Page<Book>
     fun one(name: String): Book?
     fun one(id: Long): Book?
     @Transactional

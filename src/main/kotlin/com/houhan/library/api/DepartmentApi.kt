@@ -2,6 +2,8 @@ package com.houhan.library.api
 
 import com.houhan.library.entity.Department
 import com.houhan.library.service.DepartmentService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
@@ -15,9 +17,10 @@ import javax.validation.constraints.NotNull
 @RequestMapping("/api/department")
 @RestController
 class DepartmentApi {
+    val log: Logger = LoggerFactory.getLogger(DepartmentApi::class.java)
 
     @Autowired
-    internal var departmentService: DepartmentService? = null
+    lateinit var departmentService: DepartmentService
 
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Int): Department? {
@@ -27,17 +30,17 @@ class DepartmentApi {
     }
 
     @GetMapping()
-    fun list(@RequestParam status: Int): List<Department>? {
+    fun list(): List<Department>? {
         println("department-list")
         val deptList: List<Department>? = departmentService?.list()
         return deptList
     }
 
     @PostMapping()
-    fun save(@ModelAttribute department: Department): String {
+    fun save(@ModelAttribute department: Department): Department? {
         println("department-save")
-        departmentService?.save(department)
-        return "/department"
+        val department = departmentService?.save(department)
+        return department
     }
 
     @PutMapping()
@@ -52,9 +55,4 @@ class DepartmentApi {
         return ""
     }
 
-    @GetMapping("/toadd")
-    fun toAdd(): String {
-        println("departmentadd")
-        return "/department/departmentadd"
-    }
 }

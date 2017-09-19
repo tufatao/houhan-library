@@ -23,7 +23,7 @@ class Book {
     lateinit var description: String
     @ManyToOne
     lateinit var category: Category
-    lateinit var keyword: String
+    var keyword: String = ""
     var status: Boolean = false
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime

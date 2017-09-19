@@ -29,5 +29,5 @@ class ApplyRecord {
     var reviewRemark: String = ""
     val createTime: Date = DateUtil.curTime()!!
     var updateTime: Date = createTime
-    lateinit var endTime: Date
+    var endTime: Date? = null
 }

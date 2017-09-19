@@ -13,6 +13,8 @@ import com.houhan.library.service.ApplyRecordService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -105,8 +107,8 @@ class ApplyRecordServiceImpl : ApplyRecordService {
         return applyRecord
     }
 
-    override fun list(): List<ApplyRecord> {
-        return applyRecordRepo.findAll() ?: ArrayList()
+    override fun list(page: Pageable): Page<ApplyRecord> {
+        return applyRecordRepo.findAll(page)
     }
 
 //    override fun one(name: String): ApplyRecord? {
