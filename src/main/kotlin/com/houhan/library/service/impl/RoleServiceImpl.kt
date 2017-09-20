@@ -1,9 +1,12 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Role
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.RoleRepo
 import com.houhan.library.service.RoleService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +29,9 @@ class RoleServiceImpl : RoleService {
         return role
     }
 
-    override fun list(): List<Role> {
-        return roleRepo.findAll() ?: ArrayList()
+    override fun list(pageIndex: Int, pageSize: Int): Page<Role> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
+        return roleRepo.findAll(page)
     }
 
     override fun one(name: String): Role? {

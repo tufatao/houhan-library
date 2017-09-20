@@ -2,9 +2,12 @@ package com.houhan.library.api
 
 import com.houhan.library.entity.Department
 import com.houhan.library.service.DepartmentService
+import com.houhan.library.web.ResultBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -23,24 +26,26 @@ class DepartmentApi {
     lateinit var departmentService: DepartmentService
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int): Department? {
+    fun detail(@PathVariable @NotNull id: Int): ResultBean<Department?> {
         println("department-detail")
-        val department: Department? = departmentService?.one(id)
-        return department
+        val department: Department? = departmentService.one(id)
+        return ResultBean(department)
     }
 
-    @GetMapping()
-    fun list(): List<Department>? {
-        println("department-list")
-        val deptList: List<Department>? = departmentService?.list()
-        return deptList
+    @PostMapping("/query")
+    fun list(
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
+            model: Model): ResultBean<Page<Department>> {
+        val deptList: Page<Department> = departmentService.list(pageIndex, pageSize)
+        return ResultBean(deptList)
     }
 
     @PostMapping()
-    fun save(@ModelAttribute department: Department): Department? {
+    fun save(@ModelAttribute @NotNull department: Department): ResultBean<Department?> {
         println("department-save")
-        val department = departmentService?.save(department)
-        return department
+        val department = departmentService.save(department)
+        return ResultBean(department)
     }
 
     @PutMapping()
@@ -50,7 +55,7 @@ class DepartmentApi {
     }
 
     @DeleteMapping()
-    fun delete(@PathVariable id: Int): String {
+    fun delete(@PathVariable @NotNull id: Int): String {
         println("department-delete")
         return ""
     }

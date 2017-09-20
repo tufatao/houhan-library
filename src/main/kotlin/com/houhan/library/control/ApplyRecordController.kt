@@ -6,8 +6,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -29,12 +27,12 @@ class ApplyRecordController {
     /**
      * 处理申请
      */
-    @GetMapping("/{applyId}/{result}/{applyRemark}/{userId}/{bookId}")
-    fun handleApply(@PathVariable @NotNull applyId: Long,
-                    @PathVariable @NotNull result: Int,
-                    @PathVariable @NotNull reviewRemark: String,
-                    @PathVariable userId: Long,
-                    @PathVariable bookId: Long,
+    @PostMapping("/handle")
+    fun handleApply(@RequestParam @NotNull applyId: Long,
+                    @RequestParam @NotNull result: Int,
+                    @RequestParam @NotNull reviewRemark: String,
+                    @RequestParam userId: Long,
+                    @RequestParam bookId: Long,
                     model: Model): String {
         val applyRecord = applyRecordService.handleApply(applyId, result, reviewRemark, userId, bookId)
         model.addAttribute("applyRecord", applyRecord)
@@ -45,12 +43,12 @@ class ApplyRecordController {
     /**
      * 发起申请
      */
-    @GetMapping("/{userId}/{bookId}")
-    fun launchApply(@PathVariable @NotNull type: Int,
-                    @PathVariable @NotNull applyRemark: String,
-                    @PathVariable @NotNull userId: Long,
-                    @PathVariable bookId: Long,
-                    @PathVariable borrowId: Long,
+    @GetMapping("/launch")
+    fun launchApply(@RequestParam @NotNull type: Int,
+                    @RequestParam @NotNull applyRemark: String,
+                    @RequestParam @NotNull userId: Long,
+                    @RequestParam bookId: Long,
+                    @RequestParam borrowId: Long,
                     model: Model): String {
         val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
         model.addAttribute("applyRecord", applyRecord)
@@ -70,19 +68,17 @@ class ApplyRecordController {
         return result
     }
 
-    @GetMapping()
+    @PostMapping("/query")
     fun list(
-            @PathVariable pageIndex: Int = 1,
-            @PathVariable pageSize: Int = 10,
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
+            @RequestParam userId: Long,
             model: Model): String {
         println("user-list")
-        var pageSizeTemp = pageSize
-        if (pageSizeTemp > 30) {
-            pageSizeTemp = 10
-        }
-        val page: Pageable = PageRequest(pageIndex - 1, pageSizeTemp)
-        val applyPage: Page<ApplyRecord> = applyRecordService.list(page)
+
+        val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, userId)
         model.addAttribute("applyPage", applyPage)
+
         return "/apply/applyList"
     }
 

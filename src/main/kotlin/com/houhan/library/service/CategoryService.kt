@@ -1,6 +1,7 @@
 package com.houhan.library.service
 
 import com.houhan.library.entity.Category
+import org.springframework.data.domain.Page
 import javax.transaction.Transactional
 
 /**
@@ -10,7 +11,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface CategoryService {
-    fun list(): List<Category>
+    fun list(pageIndex: Int, pageSize: Int): Page<Category>
     fun one(name: String): Category?
     fun one(id: Int): Category?
     @Transactional

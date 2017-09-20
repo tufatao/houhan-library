@@ -1,7 +1,7 @@
 package com.houhan.library.control
 
 import com.houhan.library.entity.Department
-import com.houhan.library.service.DepartmentService
+import com.houhan.library.resposity.DepartmentRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -18,21 +18,31 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class SignController{
     @Autowired
-    internal val departmentService: DepartmentService? = null
+    internal lateinit var departmentRepo: DepartmentRepo
+
+    /**
+     * 注册
+     */
     @GetMapping("/signup")
     fun signup(model: Model): String {
         println("sign-signup")
-        val deptList: List<Department> = departmentService?.list()!!
+        val deptList: List<Department> = departmentRepo.findAll()
         model.addAttribute("deptList", deptList)
         return "signup"
     }
 
+    /**
+     * 找回密码
+     */
     @GetMapping("/findpw")
     fun findPw(): String {
         println("sign-findPw")
         return "findpw"
     }
 
+    /**
+     * 登录
+     */
     @GetMapping("/login")
     fun signin(): String {
         println("sign-login")

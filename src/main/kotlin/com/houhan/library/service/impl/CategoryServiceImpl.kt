@@ -1,9 +1,12 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Category
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.CategoryRepo
 import com.houhan.library.service.CategoryService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +29,9 @@ class CategoryServiceImpl : CategoryService {
         return category
     }
 
-    override fun list(): List<Category> {
-        return categoryRepo.findAll() ?: ArrayList()
+    override fun list(pageIndex: Int, pageSize: Int): Page<Category> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
+        return categoryRepo.findAll(page)
     }
 
     override fun one(name: String): Category? {

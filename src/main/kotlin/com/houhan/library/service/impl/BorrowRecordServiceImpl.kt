@@ -1,9 +1,12 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.BorrowRecord
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +29,9 @@ class BorrowRecordServiceImpl : BorrowRecordService {
         return borrowRecord
     }
 
-    override fun list(): List<BorrowRecord> {
-        return borrowRecordRepo.findAll() ?: ArrayList()
+    override fun list(pageIndex: Int, pageSize: Int, userId: Long): Page<BorrowRecord> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
+        return borrowRecordRepo.findAll(page)
     }
 
 //    override fun one(name: String): BorrowRecord? {

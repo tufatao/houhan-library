@@ -1,9 +1,12 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Department
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.DepartmentRepo
 import com.houhan.library.service.DepartmentService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 /**
@@ -26,8 +29,9 @@ class DepartmentServiceImpl : DepartmentService {
         return department
     }
 
-    override fun list(): List<Department> {
-        return departmentRepo.findAll() ?: ArrayList()
+    override fun list(pageIndex: Int, pageSize: Int): Page<Department> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
+        return departmentRepo.findAll(page)
     }
 
     override fun one(name: String): Department? {

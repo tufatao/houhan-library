@@ -2,14 +2,13 @@ package com.houhan.library.control
 
 import com.houhan.library.entity.Book
 import com.houhan.library.entity.Category
+import com.houhan.library.resposity.CategoryRepo
 import com.houhan.library.service.BookService
 import com.houhan.library.service.CategoryService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -28,6 +27,8 @@ class BookController {
     @Autowired
     lateinit var categoryService: CategoryService
     @Autowired
+    lateinit var categoryRepo: CategoryRepo
+    @Autowired
     lateinit var bookService: BookService
 
     @GetMapping("/{id}")
@@ -42,18 +43,13 @@ class BookController {
         return result
     }
 
-    @GetMapping()
+    @PostMapping("/query")
     fun list(
-            @PathVariable pageIndex: Int = 1,
-            @PathVariable pageSize: Int = 10,
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
             model: Model): String {
         println("book-list")
-        var pageSizeTemp = pageSize
-        if (pageSizeTemp > 30) {
-            pageSizeTemp = 10
-        }
-        val page: Pageable = PageRequest(pageIndex - 1, pageSizeTemp)
-        val bookPage: Page<Book> = bookService.list(page)
+        val bookPage: Page<Book> = bookService.list(pageIndex, pageSize)
         model.addAttribute("bookPage", bookPage)
         return "/book/booklist"
     }
@@ -88,7 +84,7 @@ class BookController {
     @GetMapping("/toadd")
     fun toAdd(model: Model): String {
         println("book-toAdd")
-        val categoryList: List<Category> = categoryService.list()
+        val categoryList: List<Category> = categoryRepo.findAll()
         model.addAttribute("categoryList", categoryList)
         return "/book/bookadd"
     }

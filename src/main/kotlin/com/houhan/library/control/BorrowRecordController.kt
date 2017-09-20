@@ -5,6 +5,7 @@ import com.houhan.library.service.BorrowRecordService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -35,10 +36,14 @@ class BorrowRecordController {
         return result
     }
 
-    @GetMapping()
-    fun list(model: Model): String {
+    @PostMapping("/query")
+    fun list(
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
+            @RequestParam userId: Long,
+            model: Model): String {
         println("borrowRecord-list")
-        val borrowRecordList: List<BorrowRecord> = borrowRecordService.list()
+        val borrowRecordList: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, userId)
         model.addAttribute("borrowRecordList", borrowRecordList)
         return "/borrowRecord/borrowRecordlist"
     }

@@ -5,6 +5,7 @@ import com.houhan.library.element.ApplyType
 import com.houhan.library.entity.ApplyRecord
 import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.helper.DateUtil
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.ApplyRecordRepo
 import com.houhan.library.resposity.BookRepo
 import com.houhan.library.resposity.BorrowRecordRepo
@@ -26,12 +27,15 @@ import org.springframework.stereotype.Service
 @Service
 class ApplyRecordServiceImpl : ApplyRecordService {
     val log: Logger = LoggerFactory.getLogger(ApplyRecordServiceImpl::class.java)
+
     @Autowired
-    lateinit var borrowRecordRepo: BorrowRecordRepo
+    internal lateinit var applyRecordRepo: ApplyRecordRepo
     @Autowired
-    lateinit var userRepo: UserRepo
+    internal lateinit var borrowRecordRepo: BorrowRecordRepo
     @Autowired
-    lateinit var bookRepo: BookRepo
+    internal lateinit var userRepo: UserRepo
+    @Autowired
+    internal lateinit var bookRepo: BookRepo
 
     /**
      * 发起申请
@@ -95,9 +99,6 @@ class ApplyRecordServiceImpl : ApplyRecordService {
         return applyRecord
     }
 
-    @Autowired
-    internal lateinit var applyRecordRepo: ApplyRecordRepo
-
     override fun save(applyRecord: ApplyRecord): ApplyRecord {
         return applyRecordRepo.saveAndFlush(applyRecord)
     }
@@ -107,7 +108,8 @@ class ApplyRecordServiceImpl : ApplyRecordService {
         return applyRecord
     }
 
-    override fun list(page: Pageable): Page<ApplyRecord> {
+    override fun list(pageIndex: Int, pageSize: Int, userId: Long): Page<ApplyRecord> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
         return applyRecordRepo.findAll(page)
     }
 

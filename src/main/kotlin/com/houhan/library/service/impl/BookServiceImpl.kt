@@ -1,6 +1,7 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Book
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.BookRepo
 import com.houhan.library.service.BookService
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,8 +29,9 @@ class BookServiceImpl : BookService {
         return book
     }
 
-    override fun list(pageable: Pageable): Page<Book> {
-        return bookRepo.findAll(pageable)
+    override fun list(pageIndex: Int, pageSize: Int): Page<Book> {
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
+        return bookRepo.findAll(page)
     }
 
     override fun one(name: String): Book? {

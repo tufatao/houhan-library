@@ -4,9 +4,16 @@ spring:
       repositories:
         enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/houhan_library_test
+    url: jdbc:mysql://localhost:3306/houhan_library_test?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     generate-ddl: true
+    # disable cache for dev
+  thymeleaf:
+    cache: false
+    # basic security
+security:
+  basic:
+    enabled: false

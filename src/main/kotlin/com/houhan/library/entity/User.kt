@@ -18,6 +18,7 @@ class User {
     lateinit var name: String
     lateinit var pw: String
     var sex: Int = 0
+    lateinit var email: String
     //生日
     lateinit var birth: String
     lateinit var mobile: String

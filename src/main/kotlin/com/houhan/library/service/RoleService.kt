@@ -1,6 +1,7 @@
 package com.houhan.library.service
 
 import com.houhan.library.entity.Role
+import org.springframework.data.domain.Page
 
 /**
  * @describe {}
@@ -9,7 +10,7 @@ import com.houhan.library.entity.Role
  * @time 2017/9/15 17:02.
  */
 interface RoleService {
-    fun list(): List<Role>
+    fun list(pageIndex: Int, pageSize: Int): Page<Role>
     fun one(name: String): Role?
     fun one(id: Int): Role?
     fun save(role: Role): Role?

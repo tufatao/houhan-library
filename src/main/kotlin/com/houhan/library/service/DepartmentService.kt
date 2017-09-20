@@ -1,6 +1,7 @@
 package com.houhan.library.service
 
 import com.houhan.library.entity.Department
+import org.springframework.data.domain.Page
 import javax.transaction.Transactional
 
 /**
@@ -10,7 +11,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface DepartmentService {
-    fun list(): List<Department>
+    fun list(pageIndex: Int, pageSize: Int): Page<Department>
     fun one(name: String): Department?
     fun one(id: Int): Department?
     @Transactional

@@ -5,6 +5,7 @@ import com.houhan.library.service.RoleService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -35,10 +36,13 @@ class RoleController {
         return result
     }
 
-    @GetMapping()
-    fun list(model: Model): String {
+    @PostMapping("/query")
+    fun list(
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
+            model: Model): String {
         println("role-list")
-        val roleList: List<Role> = roleService.list()
+        val roleList: Page<Role> = roleService.list(pageIndex, pageSize)
         model.addAttribute("roleList", roleList)
         return "/role/rolelist"
     }

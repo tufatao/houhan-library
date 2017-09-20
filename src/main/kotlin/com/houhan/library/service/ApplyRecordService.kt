@@ -2,7 +2,6 @@ package com.houhan.library.service
 
 import com.houhan.library.entity.ApplyRecord
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import javax.transaction.Transactional
 
 /**
@@ -12,7 +11,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface ApplyRecordService {
-    fun list(page: Pageable): Page<ApplyRecord>
+    fun list(pageIndex: Int, pageSize: Int, userId: Long): Page<ApplyRecord>
     //    fun one(name: String): ApplyRecord?
     fun one(id: Long): ApplyRecord?
 

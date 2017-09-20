@@ -5,6 +5,7 @@ import com.houhan.library.service.DepartmentService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -35,10 +36,13 @@ class DepartmentController {
         return result
     }
 
-    @GetMapping()
-    fun list(model: Model): String {
+    @PostMapping("/query")
+    fun list(
+            @RequestParam pageIndex: Int = 1,
+            @RequestParam pageSize: Int = 10,
+            model: Model): String {
         println("department-list")
-        val deptList: List<Department> = departmentService.list()
+        val deptList: Page<Department> = departmentService.list(pageIndex, pageSize)
         model.addAttribute("deptList", deptList)
         return "/department/departmentlist"
     }

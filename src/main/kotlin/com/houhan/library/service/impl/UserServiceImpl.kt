@@ -1,6 +1,7 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.entity.User
+import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.UserRepo
 import com.houhan.library.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,6 +20,10 @@ class UserServiceImpl : UserService {
     @Autowired
     internal lateinit var userRepo: UserRepo
 
+    override fun countByName(name: String): Int {
+        return userRepo.countByName(name)
+    }
+
     override fun save(user: User): User {
         return userRepo.saveAndFlush(user)
     }
@@ -28,8 +33,9 @@ class UserServiceImpl : UserService {
         return user
     }
 
-    override fun list(page: Pageable): Page<User> {
+    override fun list(pageIndex: Int, pageSize: Int): Page<User> {
 //        return userRepo.findAll() ?: ArrayList()
+        val page: Pageable = PageHelper.page(pageIndex, pageSize)
         val userPage: Page<User> = userRepo.findAll(page)
         return userPage
     }
