@@ -4,6 +4,8 @@ import com.houhan.library.entity.User
 import com.houhan.library.helper.PageHelper
 import com.houhan.library.resposity.UserRepo
 import com.houhan.library.service.UserService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service
  */
 @Service
 class UserServiceImpl : UserService {
+    val log: Logger = LoggerFactory.getLogger(UserServiceImpl::class.java)
+
     @Autowired
     internal lateinit var userRepo: UserRepo
 
@@ -49,8 +53,14 @@ class UserServiceImpl : UserService {
         userRepo.delete(id)
     }
 
-    override fun pw(name: String): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loginCheck(name: String, pw: String): User? {
+        val user = userRepo.findByName(name)
+        val pwBack = user.pw
+        if (pw == pwBack) {
+            return user
+        } else {
+            return null
+        }
     }
 
 }

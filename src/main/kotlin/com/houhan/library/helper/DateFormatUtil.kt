@@ -13,10 +13,10 @@ import java.util.*
 object DateFormatUtil {
     private var simpleDateFormat: SimpleDateFormat? = null
 
-    private val datePattern1 = "yy-MM-dd"
-    private val datePattern2 = "yy-MM-dd HH:mm:ss"
-    private val datePattern3 = "yy年MM月dd日"
-    private val datePattern4 = "yy年MM月dd日 HH时mm分ss秒"
+    private val datePattern1 = "yyyy-MM-dd"
+    private val datePattern2 = "yyyy-MM-dd HH:mm:ss"
+    private val datePattern3 = "yyyy年MM月dd日"
+    private val datePattern4 = "yyyy年MM月dd日 HH时mm分ss秒"
 
     fun strStyle1(date: Date): String {
         return date2String(date, datePattern1)

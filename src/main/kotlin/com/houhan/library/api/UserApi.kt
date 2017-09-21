@@ -28,22 +28,10 @@ class UserApi {
     @Autowired
     lateinit var userRepo: UserRepo
 
-    @PostMapping()
-    fun save(@ModelAttribute @NotNull user: User): ResultBean<User?> {
-        println("user-save")
-        val countName = userService.countByName(user.name)
-//        if(countName > 0){
-//            val resultBean = ResultBean()
-//            resultBean.code = FAIL
-//            resultBean.msg = "用户名已存在!"
-//            return resultBean
-//
-//        } else {
-//            val userR = userService.save(user)
-//            return ResultBean(userR)
-//        }
-        val userR = userService.save(user)
-        return ResultBean(userR)
+    @PostMapping("/update")
+    fun update(@ModelAttribute @NotNull user: User): ResultBean<Unit> {
+        userService.save(user)
+        return ResultBean()
     }
 
     @GetMapping("/{id}")
@@ -62,22 +50,14 @@ class UserApi {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             model: Model): ResultBean<Page<User>> {
-        println("apply-list")
         val applyPage: Page<User> = userService.list(pageIndex, pageSize)
         return ResultBean(applyPage)
     }
 
-    @PutMapping()
-    fun update(@ModelAttribute @NotNull user: User, model: Model): String {
-        println("apply-update")
-        return "redirect:/apply"
-    }
-
     @DeleteMapping()
-    fun delete(@RequestParam @NotNull id: Long): String {
-        println("apply-delete")
+    fun delete(@RequestParam @NotNull id: Long): ResultBean<Unit> {
         userRepo.delete(id)
-        return "redirect:/apply"
+        return ResultBean()
     }
 
 }

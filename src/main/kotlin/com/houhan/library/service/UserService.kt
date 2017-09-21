@@ -13,7 +13,7 @@ interface UserService {
     fun list(pageIndex: Int, pageSize: Int): Page<User>
     fun one(name: String): User?
     fun one(id: Long): User?
-    fun pw(name: String): String
+    fun loginCheck(name: String, pw: String): User?
     fun countByName(name: String): Int
     fun save(user: User): User?
     fun delete(id: Long)

@@ -1,15 +1,15 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.User
-import com.houhan.library.resposity.UserRepo
+import com.houhan.library.helper.DateUtil
 import com.houhan.library.service.UserService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletResponse
 import javax.validation.constraints.NotNull
 
 /**
@@ -25,53 +25,54 @@ class SignApi {
 
     @Autowired
     lateinit var userService: UserService
-    @Autowired
-    lateinit var userRepo: UserRepo
 
-    /**
-     * 注册
-     */
+    @PostMapping("/login")
+    fun login(@RequestParam name: String, @RequestParam pw: String, response: HttpServletResponse): ResultBean<User> {
+
+        val countName = userService.countByName(name)
+        val resultBean: ResultBean<User> = ResultBean()
+        resultBean.code = ResultBean.FAIL
+        if (countName < 1) {
+            resultBean.msg = "登录, 用户名($name)不存在!"
+            return resultBean
+        } else {
+            val user = userService.loginCheck(name, pw)
+            if (null != user) {
+//                TODO 记录操作, 终端, Ip, 用户名, 时间
+                log.info("登录, 用户名($name), time(${DateUtil.curTime()})")
+                response.addCookie(Cookie("USER_NAME", name))
+                response.addCookie(Cookie("USER_ID", "$user.id"))
+                return ResultBean(user)
+            } else {
+                resultBean.msg = "登录, 用户($name)密码错误!"
+                return resultBean
+            }
+        }
+    }
+
     @PostMapping("/signup")
-    fun save(@ModelAttribute @NotNull user: User): ResultBean<User?> {
-        val user = userService.save(user)
-        return ResultBean(user)
-    }
-
-    @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResultBean<User?> {
-        println("apply-detail")
-        val user: User? = userRepo.findOne(id)
-        user?.let {
-
-        } ?: log.info("apply-detail: User(id = $id) not found")
-
-        return ResultBean(user)
-    }
-
-    @PostMapping("/query")
-    fun list(
-            @RequestParam pageIndex: Int = 1,
-            @RequestParam pageSize: Int = 10,
-            @RequestParam userId: Long,
-            model: Model): ResultBean<Page<User>> {
-        println("apply-list")
-
-        val applyPage: Page<User> = userService.list(pageIndex, pageSize)
-
-        return ResultBean(applyPage)
-    }
-
-    @PutMapping()
-    fun update(@ModelAttribute @NotNull user: User, model: Model): String {
-        println("apply-update")
-        return "redirect:/apply"
-    }
-
-    @DeleteMapping()
-    fun delete(@RequestParam @NotNull id: Long): String {
-        println("apply-delete")
-        userRepo.delete(id)
-        return "redirect:/apply"
+    fun signup(@ModelAttribute @NotNull user: User): ResultBean<String> {
+        val name = user.name
+        val countName = userService.countByName(user.name)
+        val countEmail = userService.countByName(user.email)
+        val countMobile = userService.countByName(user.mobile)
+        val resultBean: ResultBean<String> = ResultBean()
+        resultBean.code = ResultBean.FAIL
+        if (countName > 0) {
+            resultBean.msg = "用户名($name)已存在!"
+            return resultBean
+        } else if (countEmail > 0) {
+            resultBean.msg = "email已存在!"
+            return resultBean
+        } else if (countMobile > 0) {
+            resultBean.msg = "手机号已存在!"
+            return resultBean
+        } else {
+            userService.save(user)
+//                TODO 记录操作, 终端, Ip, 用户名, 时间
+            log.info("注册成功, 用户名($name), time(${DateUtil.curTime()})")
+            return ResultBean(name)
+        }
     }
 
 }
