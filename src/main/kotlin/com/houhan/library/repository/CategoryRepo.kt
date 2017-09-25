@@ -1,6 +1,6 @@
-package com.houhan.library.resposity
+package com.houhan.library.repository
 
-import com.houhan.library.entity.User
+import com.houhan.library.entity.Category
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
  * @version V0.1
  */
 @Repository
-interface UserRepo : JpaRepository<User, Long> {
-    fun findByName(@Param("name") name: String): User
-    fun countByName(@Param("name") name: String): Int
+interface CategoryRepo : JpaRepository<Category, Int> {
+    fun findByName(@Param("name") name: String): Category
 }

@@ -1,4 +1,4 @@
-package com.houhan.library.resposity
+package com.houhan.library.repository
 
 import com.houhan.library.entity.ApplyRecord
 import org.springframework.data.jpa.repository.JpaRepository

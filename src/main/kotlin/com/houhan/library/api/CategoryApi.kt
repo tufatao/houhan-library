@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.Category
-import com.houhan.library.resposity.CategoryRepo
+import com.houhan.library.repository.CategoryRepo
 import com.houhan.library.service.CategoryService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

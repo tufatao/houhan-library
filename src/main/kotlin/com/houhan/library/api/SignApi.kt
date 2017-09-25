@@ -8,7 +8,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 import javax.validation.constraints.NotNull
 
@@ -27,10 +26,10 @@ class SignApi {
     lateinit var userService: UserService
 
     @PostMapping("/login")
-    fun login(@RequestParam name: String, @RequestParam pw: String, response: HttpServletResponse): ResultBean<User> {
+    fun login(@RequestParam name: String, @RequestParam pw: String, response: HttpServletResponse): ResultBean<Map<String, Any>> {
 
         val countName = userService.countByName(name)
-        val resultBean: ResultBean<User> = ResultBean()
+        val resultBean: ResultBean<Map<String, Any>> = ResultBean()
         resultBean.code = ResultBean.FAIL
         if (countName < 1) {
             resultBean.msg = "登录, 用户名($name)不存在!"
@@ -40,9 +39,10 @@ class SignApi {
             if (null != user) {
 //                TODO 记录操作, 终端, Ip, 用户名, 时间
                 log.info("登录, 用户名($name), time(${DateUtil.curTime()})")
-                response.addCookie(Cookie("USER_NAME", name))
-                response.addCookie(Cookie("USER_ID", "$user.id"))
-                return ResultBean(user)
+//                response.addCookie(Cookie("USER_NAME", name))
+//                response.addCookie(Cookie("USER_ID", "$user.id"))
+                val logParam = mapOf("userName" to name, "roleName" to user.role.name, "userId" to user.id)
+                return ResultBean(logParam)
             } else {
                 resultBean.msg = "登录, 用户($name)密码错误!"
                 return resultBean

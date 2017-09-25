@@ -1,4 +1,4 @@
-package com.houhan.library.resposity
+package com.houhan.library.repository
 
 import com.houhan.library.entity.UserBorrow
 import org.springframework.data.jpa.repository.JpaRepository

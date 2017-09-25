@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.Book
-import com.houhan.library.resposity.BookRepo
+import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

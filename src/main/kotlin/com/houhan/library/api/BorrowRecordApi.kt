@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.BorrowRecord
-import com.houhan.library.resposity.BorrowRecordRepo
+import com.houhan.library.repository.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

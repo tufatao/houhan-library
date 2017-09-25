@@ -1,7 +1,7 @@
 package com.houhan.library.control
 
 import com.houhan.library.entity.User
-import com.houhan.library.resposity.UserBorrowRepo
+import com.houhan.library.repository.UserBorrowRepo
 import com.houhan.library.service.DepartmentService
 import com.houhan.library.service.RoleService
 import com.houhan.library.service.UserService

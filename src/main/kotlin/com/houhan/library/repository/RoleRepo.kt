@@ -1,6 +1,6 @@
-package com.houhan.library.resposity
+package com.houhan.library.repository
 
-import com.houhan.library.entity.Category
+import com.houhan.library.entity.Role
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository
  * @version V0.1
  */
 @Repository
-interface CategoryRepo : JpaRepository<Category, Int> {
-    fun findByName(@Param("name") name: String): Category
+interface RoleRepo : JpaRepository<Role, Int> {
+    fun findByName(@Param("name") name: String): Role
 }

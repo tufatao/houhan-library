@@ -6,10 +6,10 @@ import com.houhan.library.entity.ApplyRecord
 import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.helper.DateUtil
 import com.houhan.library.helper.PageHelper
-import com.houhan.library.resposity.ApplyRecordRepo
-import com.houhan.library.resposity.BookRepo
-import com.houhan.library.resposity.BorrowRecordRepo
-import com.houhan.library.resposity.UserRepo
+import com.houhan.library.repository.ApplyRecordRepo
+import com.houhan.library.repository.BookRepo
+import com.houhan.library.repository.BorrowRecordRepo
+import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.ApplyRecordService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.User
-import com.houhan.library.resposity.UserRepo
+import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.UserService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

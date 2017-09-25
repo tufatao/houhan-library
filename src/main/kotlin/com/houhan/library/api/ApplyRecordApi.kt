@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.ApplyRecord
-import com.houhan.library.resposity.ApplyRecordRepo
+import com.houhan.library.repository.ApplyRecordRepo
 import com.houhan.library.service.ApplyRecordService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

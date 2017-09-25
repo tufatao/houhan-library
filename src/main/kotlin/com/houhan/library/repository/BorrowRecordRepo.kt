@@ -1,8 +1,7 @@
-package com.houhan.library.resposity
+package com.houhan.library.repository
 
-import com.houhan.library.entity.Book
+import com.houhan.library.entity.BorrowRecord
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository
  * @version V0.1
  */
 @Repository
-interface BookRepo : JpaRepository<Book, Long> {
+interface BorrowRecordRepo : JpaRepository<BorrowRecord, Long> {
     //    fun findByIdCardNum(@Param("idCardNum") idCardNum: String): User
-    fun findByName(@Param("name") name: String): Book?
 }

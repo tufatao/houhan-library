@@ -1,7 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.Role
-import com.houhan.library.resposity.RoleRepo
+import com.houhan.library.repository.RoleRepo
 import com.houhan.library.service.RoleService
 import com.houhan.library.web.ResultBean
 import org.slf4j.Logger

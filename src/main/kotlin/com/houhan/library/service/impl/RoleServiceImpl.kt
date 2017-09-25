@@ -2,7 +2,7 @@ package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Role
 import com.houhan.library.helper.PageHelper
-import com.houhan.library.resposity.RoleRepo
+import com.houhan.library.repository.RoleRepo
 import com.houhan.library.service.RoleService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page

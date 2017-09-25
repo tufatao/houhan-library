@@ -1,7 +1,7 @@
 package com.houhan.library.control
 
 import com.houhan.library.entity.Department
-import com.houhan.library.resposity.DepartmentRepo
+import com.houhan.library.repository.DepartmentRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -30,6 +30,15 @@ class SignController{
     }
 
     /**
+     * 登录
+     */
+    @GetMapping("/login")
+    fun signin(): String {
+        println("sign-login")
+        return "login"
+    }
+
+    /**
      * 找回密码
      */
     @GetMapping("/findpw")
@@ -38,12 +47,4 @@ class SignController{
         return "findpw"
     }
 
-    /**
-     * 登录
-     */
-    @GetMapping("/login")
-    fun signin(): String {
-        println("sign-login")
-        return "login"
-    }
 }

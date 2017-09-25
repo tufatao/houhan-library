@@ -2,7 +2,7 @@ package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Book
 import com.houhan.library.helper.PageHelper
-import com.houhan.library.resposity.BookRepo
+import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page

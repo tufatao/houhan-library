@@ -2,7 +2,7 @@ package com.houhan.library.service.impl
 
 import com.houhan.library.entity.Department
 import com.houhan.library.helper.PageHelper
-import com.houhan.library.resposity.DepartmentRepo
+import com.houhan.library.repository.DepartmentRepo
 import com.houhan.library.service.DepartmentService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
