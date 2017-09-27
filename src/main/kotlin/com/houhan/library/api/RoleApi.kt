@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.Role
 import com.houhan.library.repository.RoleRepo
 import com.houhan.library.service.RoleService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,33 +29,33 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull role: Role): ResultBean<Role?> {
+    fun save(@ModelAttribute @NotNull role: Role): ResponseBean<Role?> {
         println("role-save")
         val role = roleService.save(role)
-        return ResultBean(role)
+        return ResponseBean(role)
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int, model: Model): ResultBean<Role?> {
+    fun detail(@PathVariable @NotNull id: Int, model: Model): ResponseBean<Role?> {
         println("apply-detail")
         val role: Role? = roleRepo.findOne(id)
         role?.let {
 
         } ?: log.info("apply-detail: Role(id = $id) not found")
 
-        return ResultBean(role)
+        return ResponseBean(role)
     }
 
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            model: Model): ResultBean<Page<Role>> {
+            model: Model): ResponseBean<Page<Role>> {
         println("apply-list")
 
         val applyPage: Page<Role> = roleService.list(pageIndex, pageSize)
 
-        return ResultBean(applyPage)
+        return ResponseBean(applyPage)
     }
 
     @PutMapping()

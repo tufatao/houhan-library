@@ -21,7 +21,7 @@ class BorrowRecord {
     @ManyToOne
     lateinit var book: Book
     var status: Int = AffairStatus.START.code
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
     var returnTime: Date? = null
     var shouldReturnTime: Date = DateUtil.addMonth(createTime, 1)!!

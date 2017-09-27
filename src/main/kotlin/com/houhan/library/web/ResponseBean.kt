@@ -8,7 +8,7 @@ import java.io.Serializable
  * @describe {}
  * @time 2017/9/20 11:39.
  */
-class ResultBean<T> : Serializable {
+class ResponseBean<T> : Serializable {
     companion object {
         private const val serialVersionUID = 1L
         val SUCCESS = 0

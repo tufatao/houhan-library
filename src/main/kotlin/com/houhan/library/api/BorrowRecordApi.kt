@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.repository.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,21 +29,21 @@ class BorrowRecordApi {
     lateinit var borrowRecordRepo: BorrowRecordRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResultBean<BorrowRecord?> {
+    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<BorrowRecord?> {
         println("borrowRecord-save")
         val borrowRecord = borrowRecordService.save(borrowRecord)
-        return ResultBean(borrowRecord)
+        return ResponseBean(borrowRecord)
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResultBean<BorrowRecord?> {
+    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<BorrowRecord?> {
         println("apply-detail")
         val borrowRecord: BorrowRecord? = borrowRecordRepo.findOne(id)
         borrowRecord?.let {
 
         } ?: log.info("apply-detail: BorrowRecord(id = $id) not found")
 
-        return ResultBean(borrowRecord)
+        return ResponseBean(borrowRecord)
     }
 
     @PostMapping("/query")
@@ -51,12 +51,12 @@ class BorrowRecordApi {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             @RequestParam userId: Long,
-            model: Model): ResultBean<Page<BorrowRecord>> {
+            model: Model): ResponseBean<Page<BorrowRecord>> {
         println("apply-list")
 
         val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, userId)
 
-        return ResultBean(applyPage)
+        return ResponseBean(applyPage)
     }
 
     @PutMapping()

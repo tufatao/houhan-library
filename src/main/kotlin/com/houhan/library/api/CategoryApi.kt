@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.Category
 import com.houhan.library.repository.CategoryRepo
 import com.houhan.library.service.CategoryService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,33 +29,33 @@ class CategoryApi {
     lateinit var categoryRepo: CategoryRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: Category): ResultBean<Category?> {
+    fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Category?> {
         println("category-save")
         val category = categoryService.save(category)
-        return ResultBean(category)
+        return ResponseBean(category)
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int, model: Model): ResultBean<Category?> {
+    fun detail(@PathVariable @NotNull id: Int, model: Model): ResponseBean<Category?> {
         println("apply-detail")
         val category: Category? = categoryRepo.findOne(id)
         category?.let {
 
         } ?: log.info("apply-detail: Category(id = $id) not found")
 
-        return ResultBean(category)
+        return ResponseBean(category)
     }
 
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            model: Model): ResultBean<Page<Category>> {
+            model: Model): ResponseBean<Page<Category>> {
         println("apply-list")
 
         val applyPage: Page<Category> = categoryService.list(pageIndex, pageSize)
 
-        return ResultBean(applyPage)
+        return ResponseBean(applyPage)
     }
 
     @PutMapping()

@@ -22,6 +22,6 @@ class Role {
     lateinit var description: String
     var totalBorrowNum: Int = 5
     var privilege: String = ""
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

@@ -25,6 +25,6 @@ class Book {
     lateinit var category: Category
     var keyword: String = ""
     var status: Boolean = false
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

@@ -9,13 +9,12 @@ import javax.validation.constraints.NotNull
 class DateUtil {
     companion object {
 
-//        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"))
         val calender: Calendar = Calendar.getInstance()
 
         /**
          * 当前时间
          */
-        fun curTime(): Date {
+        fun now(): Date {
             return Date()
         }
 

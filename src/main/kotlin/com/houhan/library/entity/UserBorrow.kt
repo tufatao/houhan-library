@@ -19,6 +19,6 @@ class UserBorrow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long = 0
     var curBorrow: Int = 0
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

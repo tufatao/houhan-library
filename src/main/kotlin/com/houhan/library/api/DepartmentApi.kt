@@ -2,7 +2,7 @@ package com.houhan.library.api
 
 import com.houhan.library.entity.Department
 import com.houhan.library.service.DepartmentService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,26 +26,26 @@ class DepartmentApi {
     lateinit var departmentService: DepartmentService
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int): ResultBean<Department?> {
+    fun detail(@PathVariable @NotNull id: Int): ResponseBean<Department?> {
         println("department-detail")
         val department: Department? = departmentService.one(id)
-        return ResultBean(department)
+        return ResponseBean(department)
     }
 
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            model: Model): ResultBean<Page<Department>> {
+            model: Model): ResponseBean<Page<Department>> {
         val deptList: Page<Department> = departmentService.list(pageIndex, pageSize)
-        return ResultBean(deptList)
+        return ResponseBean(deptList)
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull department: Department): ResultBean<Department?> {
+    fun save(@ModelAttribute @NotNull department: Department): ResponseBean<Department?> {
         println("department-save")
         val department = departmentService.save(department)
-        return ResultBean(department)
+        return ResponseBean(department)
     }
 
     @PutMapping()

@@ -19,6 +19,6 @@ class Department {
     lateinit var description: String
     @ManyToOne
     var parentDept: Department? = null
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

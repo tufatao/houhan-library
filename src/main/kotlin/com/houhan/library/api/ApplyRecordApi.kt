@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.ApplyRecord
 import com.houhan.library.repository.ApplyRecordRepo
 import com.houhan.library.service.ApplyRecordService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,10 +37,10 @@ class ApplyRecordApi {
                     @RequestParam @NotNull reviewRemark: String,
                     @RequestParam userId: Long,
                     @RequestParam bookId: Long,
-                    model: Model): ResultBean<ApplyRecord> {
+                    model: Model): ResponseBean<ApplyRecord> {
         val applyRecord = applyRecordService.handleApply(applyId, result, reviewRemark, userId, bookId)
 
-        return ResultBean(applyRecord)
+        return ResponseBean(applyRecord)
     }
 
     /**
@@ -52,24 +52,24 @@ class ApplyRecordApi {
                     @RequestParam @NotNull userId: Long,
                     @RequestParam bookId: Long,
                     @RequestParam borrowId: Long,
-                    model: Model): ResultBean<ApplyRecord> {
+                    model: Model): ResponseBean<ApplyRecord> {
         val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
 
-        return ResultBean(applyRecord)
+        return ResponseBean(applyRecord)
     }
 
     /**
      * 通过id获取ApplyRecord
      */
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResultBean<ApplyRecord?> {
+    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<ApplyRecord?> {
         println("apply-detail")
         val applyRecord: ApplyRecord? = applyRecordRepo.findOne(id)
         applyRecord?.let {
 
         } ?: log.info("apply-detail: ApplyRecord(id = $id) not found")
 
-        return ResultBean(applyRecord)
+        return ResponseBean(applyRecord)
     }
 
     /**
@@ -80,12 +80,12 @@ class ApplyRecordApi {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             @RequestParam userId: Long,
-            model: Model): ResultBean<Page<ApplyRecord>> {
+            model: Model): ResponseBean<Page<ApplyRecord>> {
         println("apply-list")
 
         val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, userId)
 
-        return ResultBean(applyPage)
+        return ResponseBean(applyPage)
     }
 
     @PutMapping()

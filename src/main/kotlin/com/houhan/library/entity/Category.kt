@@ -19,6 +19,6 @@ class Category {
     lateinit var description: String
     @ManyToOne
     var parentCat: Category? = null
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

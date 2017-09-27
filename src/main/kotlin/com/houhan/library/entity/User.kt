@@ -30,7 +30,7 @@ class User {
     var sex: Int = 0
     @Email(message = "email格式错误")
     @Column(length = 50)
-    lateinit var email: String
+    var email: String = ""
     //生日
     @Pattern(regexp = "^[12]\\d{3}-1?\\d-[123]?\\d$", message = "生日格式错误")
     @Past
@@ -46,7 +46,7 @@ class User {
     //职位
     @Size(max = 50)
     @Column(length = 50)
-    lateinit var position: String
+    var position: String = ""
     //所属部门
     @ManyToOne
     lateinit var department: Department
@@ -55,6 +55,6 @@ class User {
     @ManyToOne
     lateinit var role: Role
     @Past
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }

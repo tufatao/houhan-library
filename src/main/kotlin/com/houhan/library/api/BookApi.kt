@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.Book
 import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
-import com.houhan.library.web.ResultBean
+import com.houhan.library.web.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,33 +29,33 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book): ResultBean<Book?> {
+    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Book?> {
         println("book-save")
         val book = bookService.save(book)
-        return ResultBean(book)
+        return ResponseBean(book)
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResultBean<Book?> {
+    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<Book?> {
         println("apply-detail")
         val book: Book? = bookRepo.findOne(id)
         book?.let {
 
         } ?: log.info("apply-detail: Book(id = $id) not found")
 
-        return ResultBean(book)
+        return ResponseBean(book)
     }
 
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            model: Model): ResultBean<Page<Book>> {
+            model: Model): ResponseBean<Page<Book>> {
         println("apply-list")
 
         val applyPage: Page<Book> = bookService.list(pageIndex, pageSize)
 
-        return ResultBean(applyPage)
+        return ResponseBean(applyPage)
     }
 
     @PutMapping()

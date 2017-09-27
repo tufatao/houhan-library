@@ -27,7 +27,7 @@ class ApplyRecord {
     var status: Int = START.code
     var applyRemark: String = ""
     var reviewRemark: String = ""
-    val createTime: Date = DateUtil.curTime()!!
+    val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
     var endTime: Date? = null
 }
