@@ -1,5 +1,6 @@
 package com.houhan.library.service
 
+import com.houhan.library.element.BookQueryUnit
 import com.houhan.library.entity.Book
 import org.springframework.data.domain.Page
 import javax.transaction.Transactional
@@ -11,7 +12,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface BookService {
-    fun list(pageIndex: Int, pageSize: Int): Page<Book>
+    fun list(pageIndex: Int, pageSize: Int, bookQueryUnit: BookQueryUnit): Page<Book>
     fun one(name: String): Book?
     fun one(id: Long): Book?
     @Transactional
@@ -20,4 +21,5 @@ interface BookService {
     //    fun delete(book: Book)
     @Transactional
     fun delete(id: Long)
+
 }

@@ -1,5 +1,6 @@
 package com.houhan.library.api
 
+import com.houhan.library.element.BookQueryUnit
 import com.houhan.library.entity.Book
 import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
@@ -50,12 +51,12 @@ class BookApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
+            @ModelAttribute bookQueryUnit: BookQueryUnit,
             model: Model): ResponseBean<Page<Book>> {
         println("apply-list")
+        val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
 
-        val applyPage: Page<Book> = bookService.list(pageIndex, pageSize)
-
-        return ResponseBean(applyPage)
+        return ResponseBean(bookPage)
     }
 
     @PutMapping()

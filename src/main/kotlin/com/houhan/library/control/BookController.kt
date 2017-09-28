@@ -1,5 +1,6 @@
 package com.houhan.library.control
 
+import com.houhan.library.element.BookQueryUnit
 import com.houhan.library.entity.Book
 import com.houhan.library.entity.Category
 import com.houhan.library.repository.CategoryRepo
@@ -47,9 +48,10 @@ class BookController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
+            @ModelAttribute bookQueryUnit: BookQueryUnit,
             model: Model): String {
-        println("book-list")
-        val bookPage: Page<Book> = bookService.list(pageIndex, pageSize)
+        println("apply-list")
+        val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
         model.addAttribute("bookPage", bookPage)
         return "/book/booklist"
     }
