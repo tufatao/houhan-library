@@ -15,8 +15,8 @@ class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int = 0
-    lateinit var name: String
-    lateinit var description: String
+    var name: String = ""
+    var description: String = ""
     @ManyToOne
     var parentCat: Category? = null
     val createTime: Date = DateUtil.now()!!

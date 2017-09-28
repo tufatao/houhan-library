@@ -1,5 +1,7 @@
 package com.houhan.library
 
+import com.houhan.library.entity.CatTest
+import com.houhan.library.entity.Category
 import com.houhan.library.helper.JsonUtil
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,4 +28,16 @@ class ApplyTests {
         val traces = Thread.currentThread().stackTrace
         println(JsonUtil.obj2Json(traces))
     }
+
+    @Test
+    fun testJsonProperty() {
+        var category: Category = Category()
+//        category.name = "Boby"
+        var catJson = JsonUtil.obj2Json(category)
+        if (catJson != null) {
+            var catTest: CatTest? = JsonUtil.json2Obj(catJson, CatTest::class.java)
+            println(catJson)
+        }
+    }
+
 }

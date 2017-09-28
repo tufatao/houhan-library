@@ -28,7 +28,9 @@ object JsonUtil {
      * @return ObjectMapper
      */
     init {
-        MAPPER.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, true).configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        MAPPER.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, true)
+                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
 
     fun obj2Json(obj: Any): String? {
