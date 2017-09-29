@@ -18,11 +18,11 @@ class Book {
     var num: Long = id
     lateinit var name: String
     lateinit var author: String
-    lateinit var icon: String
+    var icon: String = ""
     lateinit var press: String
-    lateinit var description: String
+    var description: String = ""
     @ManyToOne
-    lateinit var category: Category
+    var category: Category? = null
     var keyword: String = ""
     var status: Boolean = false
     val createTime: Date = DateUtil.now()!!
