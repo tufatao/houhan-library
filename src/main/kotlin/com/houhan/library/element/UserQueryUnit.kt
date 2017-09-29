@@ -7,8 +7,10 @@ package com.houhan.library.element
  * @time 2017/9/18 9:52.
  */
 data class UserQueryUnit(
-        var userName: String,
-        var deptName: String,
-        var sex: Int,
-        var keyword: String
+        var name: String = "",
+        var mobile: String = "",
+        var deptName: String = "",
+        var roleName: String = "",
+        var keyword: String = "",
+        var sex: Int? = null
 )

@@ -1,5 +1,6 @@
 package com.houhan.library.api
 
+import com.houhan.library.element.ApplyQueryUnit
 import com.houhan.library.entity.ApplyRecord
 import com.houhan.library.repository.ApplyRecordRepo
 import com.houhan.library.service.ApplyRecordService
@@ -79,11 +80,11 @@ class ApplyRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam userId: Long,
+            @ModelAttribute applyQueryUnit: ApplyQueryUnit,
             model: Model): ResponseBean<Page<ApplyRecord>> {
         println("apply-list")
 
-        val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, userId)
+        val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, applyQueryUnit)
 
         return ResponseBean(applyPage)
     }

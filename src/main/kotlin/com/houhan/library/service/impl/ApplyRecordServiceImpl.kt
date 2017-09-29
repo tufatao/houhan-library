@@ -1,9 +1,9 @@
 package com.houhan.library.service.impl
 
 import com.houhan.library.element.AffairStatus
+import com.houhan.library.element.ApplyQueryUnit
 import com.houhan.library.element.ApplyType
-import com.houhan.library.entity.ApplyRecord
-import com.houhan.library.entity.BorrowRecord
+import com.houhan.library.entity.*
 import com.houhan.library.helper.DateUtil
 import com.houhan.library.helper.PageHelper
 import com.houhan.library.repository.ApplyRecordRepo
@@ -16,7 +16,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
+import org.springframework.util.StringUtils
+import java.util.*
+import javax.persistence.criteria.Predicate
 
 /**
  * @describe {}
@@ -108,9 +112,34 @@ class ApplyRecordServiceImpl : ApplyRecordService {
         return applyRecord
     }
 
-    override fun list(pageIndex: Int, pageSize: Int, userId: Long): Page<ApplyRecord> {
+    override fun list(pageIndex: Int, pageSize: Int, applyQueryUnit: ApplyQueryUnit): Page<ApplyRecord> {
         val page: Pageable = PageHelper.page(pageIndex, pageSize)
-        return applyRecordRepo.findAll(page)
+        val speci: Specification<ApplyRecord> = Specification<ApplyRecord> { root, query, cb ->
+            val list = ArrayList<Predicate>()
+
+            if (!StringUtils.isEmpty(applyQueryUnit.bookName)) {
+                list.add(cb.like(root.get<ApplyRecord>("book").get<Book>("name").`as`(String::class.java), "%" + applyQueryUnit.bookName + "%"))
+            }
+
+            if (!StringUtils.isEmpty(applyQueryUnit.userName)) {
+                list.add(cb.equal(root.get<ApplyRecord>("user").get<User>("name").`as`(String::class.java), applyQueryUnit.userName))
+            }
+
+            if (!StringUtils.isEmpty(applyQueryUnit.deptName)) {
+                list.add(cb.equal(root.get<ApplyRecord>("user").get<User>("department").get<Department>("name").`as`(String::class.java), applyQueryUnit.deptName))
+            }
+
+            if (!StringUtils.isEmpty(applyQueryUnit.type)) {
+                list.add(cb.equal(root.get<ApplyRecord>("type").`as`(Int::class.java), applyQueryUnit.type))
+            }
+
+            if (!StringUtils.isEmpty(applyQueryUnit.status)) {
+                list.add(cb.equal(root.get<ApplyRecord>("status").`as`(Int::class.java), applyQueryUnit.status))
+            }
+
+            cb.and(*list.toTypedArray())
+        }
+        return applyRecordRepo!!.findAll(speci, page)
     }
 
 //    override fun one(name: String): ApplyRecord? {

@@ -1,5 +1,6 @@
 package com.houhan.library.api
 
+import com.houhan.library.element.UserQueryUnit
 import com.houhan.library.entity.User
 import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.UserService
@@ -49,8 +50,9 @@ class UserApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
+            @ModelAttribute userQueryUnit: UserQueryUnit,
             model: Model): ResponseBean<Page<User>> {
-        val applyPage: Page<User> = userService.list(pageIndex, pageSize)
+        val applyPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         return ResponseBean(applyPage)
     }
 

@@ -1,5 +1,6 @@
 package com.houhan.library.control
 
+import com.houhan.library.element.UserQueryUnit
 import com.houhan.library.entity.User
 import com.houhan.library.repository.UserBorrowRepo
 import com.houhan.library.service.DepartmentService
@@ -53,9 +54,9 @@ class UserController {
     fun list(
             @PathVariable pageIndex: Int = 1,
             @PathVariable pageSize: Int = 10,
+            @ModelAttribute userQueryUnit: UserQueryUnit,
             model: Model): String {
-        println("user-list")
-        val userPage: Page<User> = userService.list(pageIndex, pageSize)
+        val userPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         model.addAttribute("userPage", userPage)
         return "/user/userlist"
     }

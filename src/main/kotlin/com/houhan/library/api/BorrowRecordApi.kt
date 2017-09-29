@@ -1,5 +1,6 @@
 package com.houhan.library.api
 
+import com.houhan.library.element.BorrowQueryUnit
 import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.repository.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
@@ -50,11 +51,11 @@ class BorrowRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam userId: Long,
+            @RequestParam borrowQueryUnit: BorrowQueryUnit,
             model: Model): ResponseBean<Page<BorrowRecord>> {
         println("apply-list")
 
-        val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, userId)
+        val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
 
         return ResponseBean(applyPage)
     }

@@ -1,5 +1,6 @@
 package com.houhan.library.service
 
+import com.houhan.library.element.BorrowQueryUnit
 import com.houhan.library.entity.BorrowRecord
 import org.springframework.data.domain.Page
 import javax.transaction.Transactional
@@ -11,7 +12,7 @@ import javax.transaction.Transactional
  * @time 2017/9/15 17:02.
  */
 interface BorrowRecordService {
-    fun list(pageIndex: Int, pageSize: Int, userId: Long): Page<BorrowRecord>
+    fun list(pageIndex: Int, pageSize: Int, borrowQueryUnit: BorrowQueryUnit): Page<BorrowRecord>
     //    fun one(name: String): BorrowRecord?
     fun one(id: Long): BorrowRecord?
 

@@ -2,6 +2,7 @@ package com.houhan.library.repository
 
 import com.houhan.library.entity.BorrowRecord
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 /**
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Repository
  * @version V0.1
  */
 @Repository
-interface BorrowRecordRepo : JpaRepository<BorrowRecord, Long> {
+interface BorrowRecordRepo : JpaRepository<BorrowRecord, Long>, JpaSpecificationExecutor<BorrowRecord> {
     //    fun findByIdCardNum(@Param("idCardNum") idCardNum: String): User
 }

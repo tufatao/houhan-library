@@ -7,8 +7,9 @@ package com.houhan.library.element
  * @time 2017/9/18 9:52.
  */
 data class ApplyQueryUnit(
-        var userName: String,
-        var deptName: String,
-        var sex: Int,
-        var keyword: String
+        var userName: String = "",
+        var bookName: String = "",
+        var deptName: String = "",
+        var type: Int? = null,
+        var status: Int? = null
 )

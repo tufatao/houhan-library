@@ -7,8 +7,8 @@ package com.houhan.library.element
  * @time 2017/9/18 9:52.
  */
 data class BorrowQueryUnit(
-        var userName: String,
-        var bookName: String,
-        var deptName: String,
-        var keyword: String
+        var userName: String = "",
+        var bookName: String = "",
+        var deptName: String = "",
+        var status: Int? = null
 )

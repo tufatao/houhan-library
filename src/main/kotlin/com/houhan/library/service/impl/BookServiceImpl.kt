@@ -2,6 +2,7 @@ package com.houhan.library.service.impl
 
 import com.houhan.library.element.BookQueryUnit
 import com.houhan.library.entity.Book
+import com.houhan.library.entity.Category
 import com.houhan.library.helper.PageHelper
 import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
@@ -36,28 +37,27 @@ class BookServiceImpl : BookService {
 
     override fun list(pageIndex: Int, pageSize: Int, bookQueryUnit: BookQueryUnit): Page<Book> {
         val page: Pageable = PageHelper.page(pageIndex, pageSize)
-        val book: Book = Book()
-        book.name = bookQueryUnit.name
-        book.author = bookQueryUnit.author
-//        book.category.name = bookQueryUnit.catName
-        book.press = bookQueryUnit.press
-        book.keyword = bookQueryUnit.keyword
         val speci: Specification<Book> = Specification<Book> { root, query, cb ->
             val list = ArrayList<Predicate>()
             if (!StringUtils.isEmpty(bookQueryUnit.name)) {
-                list.add(cb.like(root.get<Book>("name").`as`(String::class.java), "%" + book.name + "%"))
+                list.add(cb.like(root.get<Book>("name").`as`(String::class.java), "%" + bookQueryUnit.name + "%"))
             }
 
             if (!StringUtils.isEmpty(bookQueryUnit.author)) {
-                list.add(cb.like(root.get<Book>("author").`as`(String::class.java), "%" + book.author + "%"))
+                list.add(cb.like(root.get<Book>("author").`as`(String::class.java), "%" + bookQueryUnit.author + "%"))
             }
 
-//            if (!StringUtils.isEmpty(bookQueryUnit.catName)) {
-//                list.add(cb.equal(root.get<Any>("cat").`as`(String::class.java), bookQueryUnit.catName))
-//            }
-            //                if (model.getDepartment() != null && model.getDepartment().getCode() != null) {
-            //                    list.add(cb.equal(root.get("department").as(DepartmentModel.class), model.getDepartment()));
-            //                }
+            if (!StringUtils.isEmpty(bookQueryUnit.press)) {
+                list.add(cb.like(root.get<Book>("press").`as`(String::class.java), "%" + bookQueryUnit.press + "%"))
+            }
+
+            if (!StringUtils.isEmpty(bookQueryUnit.keyword)) {
+                list.add(cb.like(root.get<Book>("keyword").`as`(String::class.java), "%" + bookQueryUnit.keyword + "%"))
+            }
+
+            if (!StringUtils.isEmpty(bookQueryUnit.catName)) {
+                list.add(cb.equal(root.get<Book>("category").get<Category>("name").`as`(String::class.java), bookQueryUnit.catName))
+            }
 
             cb.and(*list.toTypedArray())
         }

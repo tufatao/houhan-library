@@ -1,5 +1,6 @@
 package com.houhan.library.control
 
+import com.houhan.library.element.BorrowQueryUnit
 import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.service.BorrowRecordService
 import org.slf4j.Logger
@@ -40,11 +41,12 @@ class BorrowRecordController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam userId: Long,
+            @RequestParam borrowQueryUnit: BorrowQueryUnit,
             model: Model): String {
-        println("borrowRecord-list")
-        val borrowRecordList: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, userId)
-        model.addAttribute("borrowRecordList", borrowRecordList)
+        println("apply-list")
+
+        val borrowPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
+        model.addAttribute("borrowPage", borrowPage)
         return "/borrowRecord/borrowRecordlist"
     }
 
