@@ -48,7 +48,7 @@ class DepartmentController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull department: Department, model: Model): String {
+    fun save(@RequestParam @NotNull department: Department, model: Model): String {
         println("department-save")
         val dept: Department? = departmentService.save(department)
         dept?.let {
@@ -59,7 +59,7 @@ class DepartmentController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull department: Department, model: Model): String {
+    fun update(@RequestParam @NotNull department: Department, model: Model): String {
         println("department-update")
         return "redirect:/department"
     }

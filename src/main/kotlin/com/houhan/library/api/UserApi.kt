@@ -30,18 +30,18 @@ class UserApi {
     lateinit var userRepo: UserRepo
 
     @PostMapping("/update")
-    fun update(@ModelAttribute @NotNull user: User): ResponseBean<Unit> {
+    fun update(@RequestParam @NotNull user: User): ResponseBean<Unit> {
         userService.save(user)
         return ResponseBean()
     }
 
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<User?> {
-        println("apply-detail")
+        println("user-detail")
         val user: User? = userRepo.findOne(id)
         user?.let {
 
-        } ?: log.info("apply-detail: User(id = $id) not found")
+        } ?: log.info("apply-detail: User(id = $id) not exist!")
 
         return ResponseBean(user)
     }

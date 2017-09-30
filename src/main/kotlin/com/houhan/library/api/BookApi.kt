@@ -30,7 +30,7 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Book?> {
+    fun save(@RequestParam @NotNull book: Book): ResponseBean<Book?> {
         println("book-save")
         val book = bookService.save(book)
         return ResponseBean(book)
@@ -60,7 +60,7 @@ class BookApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
+    fun update(@RequestParam @NotNull book: Book, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }

@@ -51,7 +51,7 @@ class BorrowRecordController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
+    fun save(@RequestParam @NotNull borrowRecord: BorrowRecord, model: Model): String {
         println("borrowRecord-save")
         val borrowRecord: BorrowRecord? = borrowRecordService.save(borrowRecord)
         borrowRecord?.let {
@@ -62,7 +62,7 @@ class BorrowRecordController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
+    fun update(@RequestParam @NotNull borrowRecord: BorrowRecord, model: Model): String {
         println("borrowRecord-update")
         return "redirect:/borrowRecord"
     }

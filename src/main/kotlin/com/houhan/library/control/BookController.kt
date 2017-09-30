@@ -57,7 +57,7 @@ class BookController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book,
+    fun save(@RequestParam @NotNull book: Book,
              @RequestParam catId: Int,
              model: Model): String {
         println("book-save")
@@ -71,7 +71,7 @@ class BookController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
+    fun update(@RequestParam @NotNull book: Book, model: Model): String {
         println("book-update")
         return "redirect:/book"
     }

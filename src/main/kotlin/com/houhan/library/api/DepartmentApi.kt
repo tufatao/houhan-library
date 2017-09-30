@@ -42,7 +42,7 @@ class DepartmentApi {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull department: Department): ResponseBean<Department?> {
+    fun save(@RequestParam @NotNull department: Department): ResponseBean<Department?> {
         println("department-save")
         val department = departmentService.save(department)
         return ResponseBean(department)

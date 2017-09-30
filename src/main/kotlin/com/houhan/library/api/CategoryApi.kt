@@ -29,7 +29,7 @@ class CategoryApi {
     lateinit var categoryRepo: CategoryRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Category?> {
+    fun save(@RequestParam @NotNull category: Category): ResponseBean<Category?> {
         println("category-save")
         val category = categoryService.save(category)
         return ResponseBean(category)
@@ -59,7 +59,7 @@ class CategoryApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull category: Category, model: Model): String {
+    fun update(@RequestParam @NotNull category: Category, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }

@@ -84,7 +84,7 @@ class ApplyRecordController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord, model: Model): String {
+    fun update(@RequestParam @NotNull applyRecord: ApplyRecord, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }

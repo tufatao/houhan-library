@@ -30,7 +30,7 @@ class BorrowRecordApi {
     lateinit var borrowRecordRepo: BorrowRecordRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<BorrowRecord?> {
+    fun save(@RequestParam @NotNull borrowRecord: BorrowRecord): ResponseBean<BorrowRecord?> {
         println("borrowRecord-save")
         val borrowRecord = borrowRecordService.save(borrowRecord)
         return ResponseBean(borrowRecord)
@@ -51,7 +51,7 @@ class BorrowRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam borrowQueryUnit: BorrowQueryUnit,
+            @ModelAttribute borrowQueryUnit: BorrowQueryUnit,
             model: Model): ResponseBean<Page<BorrowRecord>> {
         println("apply-list")
 
@@ -61,7 +61,7 @@ class BorrowRecordApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
+    fun update(@RequestParam @NotNull borrowRecord: BorrowRecord, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }

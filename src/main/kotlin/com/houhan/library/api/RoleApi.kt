@@ -29,7 +29,7 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull role: Role): ResponseBean<Role?> {
+    fun save(@RequestParam @NotNull role: Role): ResponseBean<Role?> {
         println("role-save")
         val role = roleService.save(role)
         return ResponseBean(role)
@@ -59,7 +59,7 @@ class RoleApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull role: Role, model: Model): String {
+    fun update(@RequestParam @NotNull role: Role, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }
