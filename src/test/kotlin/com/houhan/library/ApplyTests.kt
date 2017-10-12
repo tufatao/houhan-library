@@ -1,6 +1,5 @@
 package com.houhan.library
 
-import com.houhan.library.entity.CatTest
 import com.houhan.library.entity.Category
 import com.houhan.library.helper.JsonUtil
 import org.junit.Test
@@ -34,7 +33,7 @@ class ApplyTests {
 //        category.name = "Boby"
         var catJson = JsonUtil.obj2Json(category)
         if (catJson != null) {
-            var catTest: CatTest? = JsonUtil.json2Obj(catJson, CatTest::class.java)
+//            var catTest: CatTest? = JsonUtil.json2Obj(catJson, CatTest::class.java)
             println(catJson)
         }
     }

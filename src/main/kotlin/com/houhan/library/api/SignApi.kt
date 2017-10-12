@@ -26,7 +26,9 @@ class SignApi {
     lateinit var userService: UserService
 
     @PostMapping("/login")
-    fun login(@RequestParam name: String, @RequestParam pw: String, response: HttpServletResponse): ResponseBean<Map<String, Any>> {
+    fun login(@RequestParam @NotNull name: String,
+              @RequestParam @NotNull pw: String,
+              response: HttpServletResponse): ResponseBean<Map<String, Any>> {
 
         val countName = userService.countByName(name)
         val responseBean: ResponseBean<Map<String, Any>> = ResponseBean()
