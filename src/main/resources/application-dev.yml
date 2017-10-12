@@ -4,7 +4,7 @@ spring:
       repositories:
         enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/houhan_library?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
+    url: jdbc:mysql://localhost:3306/houhan_library_test?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
 #    url: jdbc:mysql://192.168.0.197:3306/houhan_library?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&autoReconnect=true&autoReconnectForPools=true&failOverReadOnly=false
     username: libraryUser
     password: pwofHouhanlibrary

@@ -24,7 +24,7 @@ class Book {
     @ManyToOne
     var category: Category? = null
     var keyword: String = ""
-    var status: Boolean = false
+    var status: Int = 0
     val createTime: Date = DateUtil.now()!!
     var updateTime: Date = createTime
 }
