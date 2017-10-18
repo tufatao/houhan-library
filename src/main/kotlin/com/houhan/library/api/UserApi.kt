@@ -30,8 +30,8 @@ class UserApi {
     lateinit var userRepo: UserRepo
 
     @PostMapping("/update")
-    fun update(@RequestParam @NotNull user: User): ResponseBean<Unit> {
-        userService.save(user)
+    fun update(@ModelAttribute @NotNull user: User): ResponseBean<Unit> {
+        userRepo.save(user)
         return ResponseBean()
     }
 

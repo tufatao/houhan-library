@@ -31,25 +31,16 @@ class UserServiceImpl : UserService {
     @Autowired
     internal lateinit var userRepo: UserRepo
 
-    override fun countByName(name: String): Int {
-        return userRepo.countByName(name)
-    }
-
-    override fun save(user: User): User {
-        return userRepo.saveAndFlush(user)
-    }
-
-    override fun one(id: Long): User? {
-        val user: User? = userRepo.findOne(id)
-        return user
-    }
-
     override fun list(pageIndex: Int, pageSize: Int, userQueryUnit: UserQueryUnit): Page<User> {
         val page: Pageable = PageHelper.page(pageIndex, pageSize)
         val speci: Specification<User> = Specification<User> { root, query, cb ->
             val list = ArrayList<Predicate>()
             if (!StringUtils.isEmpty(userQueryUnit.name)) {
                 list.add(cb.like(root.get<User>("name").`as`(String::class.java), "%" + userQueryUnit.name + "%"))
+            }
+
+            if (!StringUtils.isEmpty(userQueryUnit.nickName)) {
+                list.add(cb.like(root.get<User>("nickName").`as`(String::class.java), "%" + userQueryUnit.nickName + "%"))
             }
 
             if (!StringUtils.isEmpty(userQueryUnit.keyword)) {
@@ -77,17 +68,8 @@ class UserServiceImpl : UserService {
         return userRepo!!.findAll(speci, page)
     }
 
-    override fun one(name: String): User? {
-        val user: User? = userRepo.findByName(name)
-        return user
-    }
-
-    override fun delete(id: Long) {
-        userRepo.delete(id)
-    }
-
-    override fun loginCheck(name: String, pw: String): User? {
-        val user = userRepo.findByName(name)
+    override fun loginCheck(nickName: String, pw: String): User? {
+        val user = userRepo.findByNickName(nickName)
         val pwBack = user.pw
         if (pw == pwBack) {
             return user

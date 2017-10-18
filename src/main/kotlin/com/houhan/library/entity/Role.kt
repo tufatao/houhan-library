@@ -6,6 +6,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.validation.constraints.Size
 
 /**
  * @describe {}<br/>
@@ -18,7 +19,9 @@ class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int = 0
+    @Size(min = 2, max = 30)
     lateinit var name: String
+    @Size(max = 255)
     lateinit var description: String
     var totalBorrowNum: Int = 5
     var privilege: String = ""

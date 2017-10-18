@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 /**
@@ -29,7 +30,7 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@RequestParam @NotNull role: Role): ResponseBean<Role?> {
+    fun save(@ModelAttribute @Valid @NotNull role: Role): ResponseBean<Role?> {
         println("role-save")
         val role = roleService.save(role)
         return ResponseBean(role)
@@ -59,7 +60,7 @@ class RoleApi {
     }
 
     @PutMapping()
-    fun update(@RequestParam @NotNull role: Role, model: Model): String {
+    fun update(@ModelAttribute @NotNull role: Role, model: Model): String {
         println("apply-update")
         return "redirect:/apply"
     }

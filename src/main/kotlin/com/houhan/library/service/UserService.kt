@@ -12,10 +12,7 @@ import org.springframework.data.domain.Page
  */
 interface UserService {
     fun list(pageIndex: Int, pageSize: Int, userQueryUnit: UserQueryUnit): Page<User>
-    fun one(name: String): User?
-    fun one(id: Long): User?
-    fun loginCheck(name: String, pw: String): User?
-    fun countByName(name: String): Int
-    fun save(user: User): User?
-    fun delete(id: Long)
+    //    fun one(name: String): User?
+//    fun one(id: Long): User?
+    fun loginCheck(nickName: String, pw: String): User?
 }

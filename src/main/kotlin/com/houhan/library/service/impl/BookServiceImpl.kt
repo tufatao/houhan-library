@@ -51,7 +51,7 @@ class BookServiceImpl : BookService {
                 list.add(cb.like(root.get<Book>("press").`as`(String::class.java), "%" + bookQueryUnit.press + "%"))
             }
 
-            if (!StringUtils.isEmpty(bookQueryUnit.status)) {
+            if (!StringUtils.isEmpty(bookQueryUnit.status) && bookQueryUnit.status != 0) {
                 list.add(cb.equal(root.get<Book>("status").`as`(Int::class.java), bookQueryUnit.status))
             }
 

@@ -3,6 +3,7 @@ package com.houhan.library.control
 import com.houhan.library.element.UserQueryUnit
 import com.houhan.library.entity.User
 import com.houhan.library.repository.UserBorrowRepo
+import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.DepartmentService
 import com.houhan.library.service.RoleService
 import com.houhan.library.service.UserService
@@ -36,13 +37,15 @@ class UserController {
     @Autowired
     internal lateinit var departmentService: DepartmentService
     @Autowired
+    internal lateinit var userRepo: UserRepo
+    @Autowired
     internal lateinit var userService: UserService
 
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): String {
         var result = ""
         println("user-detail")
-        val user: User? = userService.one(id)
+        val user: User? = userRepo.findOne(id)
         user?.let {
             model.addAttribute("user", user)
             result = "/user/userlist"
@@ -73,7 +76,7 @@ class UserController {
         user.department = departmentService.one(deptId)!!
         user.role = roleService?.one("新秀")!!
         userBorrowRepo?.saveAndFlush(user.userBorrow)
-        val user: User? = userService.save(user)
+        val user: User? = userRepo.save(user)
         user?.let {
             model.addAttribute("user", user)
             return "redirect:/user"
@@ -90,7 +93,7 @@ class UserController {
     @DeleteMapping()
     fun delete(@PathVariable id: Long): String {
         println("user-delete")
-        userService.delete(id)
+        userRepo.delete(id)
         return "redirect:/user"
     }
 }

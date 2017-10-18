@@ -8,6 +8,7 @@ package com.houhan.library.element
  */
 data class UserQueryUnit(
         var name: String = "",
+        var nickName: String = "",
         var mobile: String = "",
         var deptName: String = "",
         var roleName: String = "",

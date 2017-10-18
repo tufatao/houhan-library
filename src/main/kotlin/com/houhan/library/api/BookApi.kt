@@ -30,7 +30,7 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@RequestParam @NotNull book: Book): ResponseBean<Book?> {
+    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Book?> {
         println("book-save")
         val book = bookService.save(book)
         return ResponseBean(book)
@@ -38,11 +38,11 @@ class BookApi {
 
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<Book?> {
-        println("apply-detail")
+        println("book-detail")
         val book: Book? = bookRepo.findOne(id)
         book?.let {
 
-        } ?: log.info("apply-detail: Book(id = $id) not found")
+        } ?: log.info("book-detail: Book(id = $id) not found")
 
         return ResponseBean(book)
     }
@@ -53,21 +53,21 @@ class BookApi {
             @RequestParam pageSize: Int = 10,
             @ModelAttribute bookQueryUnit: BookQueryUnit,
             model: Model): ResponseBean<Page<Book>> {
-        println("apply-list")
+        println("book-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
 
         return ResponseBean(bookPage)
     }
 
     @PutMapping()
-    fun update(@RequestParam @NotNull book: Book, model: Model): String {
-        println("apply-update")
+    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
+        println("book-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam @NotNull id: Long): String {
-        println("apply-delete")
+        println("book-delete")
         bookRepo.delete(id)
         return "redirect:/apply"
     }

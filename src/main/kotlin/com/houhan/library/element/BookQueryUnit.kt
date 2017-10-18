@@ -10,7 +10,7 @@ data class BookQueryUnit(
         var name: String = "",
         var author: String = "",
         var catName: String = "",
-        var status: Int? = null,
+        var status: Int? = 1,
         var press: String = "",
         var keyword: String = ""
 )

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository
  */
 @Repository
 interface UserRepo : JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
-    fun findByName(@Param("name") name: String): User
     fun countByName(@Param("name") name: String): Int
+    fun findByNickName(@Param("nickName") nickName: String): User
+    fun countByNickName(@Param("nickName") nickName: String): Int
+    fun countByEmail(@Param("email") email: String): Int
+    fun countByMobile(@Param("mobile") mobile: String): Int
 }

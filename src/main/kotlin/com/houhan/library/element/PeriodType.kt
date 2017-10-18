@@ -7,5 +7,5 @@ package com.houhan.library.element
  * @time 2017/9/18 9:52.
  */
 enum class PeriodType(val code: Int) {
-    WEEK(1), MONTH(1), THREEMONTH(3), RETURN(4)
+    WEEK(1), MONTH(1), THREEMONTH(3), YEAR(4)
 }
