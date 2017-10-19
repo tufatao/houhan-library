@@ -30,10 +30,15 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @Valid @NotNull role: Role): ResponseBean<Role?> {
+    fun save(@ModelAttribute @Valid @NotNull role: Role): ResponseBean<Int?> {
         println("role-save")
-        val role = roleService.save(role)
-        return ResponseBean(role)
+        try {
+            val role = roleService.save(role)
+            return ResponseBean(role!!.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
     }
 
     @GetMapping("/{id}")

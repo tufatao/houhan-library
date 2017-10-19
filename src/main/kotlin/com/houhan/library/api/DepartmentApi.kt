@@ -42,10 +42,15 @@ class DepartmentApi {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull department: Department): ResponseBean<Department?> {
+    fun save(@ModelAttribute @NotNull department: Department): ResponseBean<Int?> {
         println("department-save")
-        val department = departmentService.save(department)
-        return ResponseBean(department)
+        try {
+            val department = departmentService.save(department)
+            return ResponseBean(department!!.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
     }
 
     @PutMapping()

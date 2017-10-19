@@ -30,10 +30,15 @@ class BorrowRecordApi {
     lateinit var borrowRecordRepo: BorrowRecordRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<BorrowRecord?> {
+    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<Long?> {
         println("borrowRecord-save")
-        val borrowRecord = borrowRecordService.save(borrowRecord)
-        return ResponseBean(borrowRecord)
+        try {
+            val borrowRecord = borrowRecordService.save(borrowRecord)
+            return ResponseBean(borrowRecord!!.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
     }
 
     @GetMapping("/{id}")

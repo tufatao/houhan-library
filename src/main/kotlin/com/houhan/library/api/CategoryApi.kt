@@ -29,10 +29,15 @@ class CategoryApi {
     lateinit var categoryRepo: CategoryRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Category?> {
+    fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Int?> {
         println("category-save")
-        val category = categoryService.save(category)
-        return ResponseBean(category)
+        try {
+            val category = categoryService.save(category)
+            return ResponseBean(category!!.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
     }
 
     @GetMapping("/{id}")

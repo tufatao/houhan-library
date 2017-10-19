@@ -30,10 +30,15 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Book?> {
+    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Long?> {
         println("book-save")
-        val book = bookService.save(book)
-        return ResponseBean(book)
+        try {
+            val book = bookService.save(book)
+            return ResponseBean(book!!.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
     }
 
     @GetMapping("/{id}")

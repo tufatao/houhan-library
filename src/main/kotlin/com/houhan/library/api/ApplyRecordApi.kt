@@ -53,10 +53,15 @@ class ApplyRecordApi {
                     @RequestParam @NotNull userId: Long,
                     @RequestParam bookId: Long,
                     @RequestParam borrowId: Long,
-                    model: Model): ResponseBean<ApplyRecord> {
-        val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
-
-        return ResponseBean(applyRecord)
+                    model: Model): ResponseBean<Long> {
+        try {
+            val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
+            return ResponseBean(applyRecord.id)
+        } catch (e: RuntimeException) {
+            log.info(e.message)
+            return ResponseBean(e)
+        }
+//        return ResponseBean(applyRecord.id)
     }
 
     /**
