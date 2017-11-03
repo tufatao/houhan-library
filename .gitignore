@@ -2,4 +2,6 @@
 !.gitignore
 !/src
 !/pom.xml
+!/Dockerfile
+!/Jenkinsfile
 !/README.md
