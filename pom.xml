@@ -25,7 +25,7 @@
         <java.version>1.8</java.version>
         <kotlin.version>1.1.4-3</kotlin.version>
 
-        <!--<docker.image.prefix>fantom</docker.image.prefix>-->
+        <docker.image.prefix>fantom</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -144,24 +144,23 @@
                 </dependencies>
             </plugin>
 
-            <!--<plugin>-->
-            <!--<groupId>com.spotify</groupId>-->
-            <!--<artifactId>docker-maven-plugin</artifactId>-->
-            <!--<version>0.4.11</version>-->
-            <!--<configuration>-->
-            <!--<imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-            <!--<dockerDirectory>src/main/docker</dockerDirectory>-->
-            <!--<resources>-->
-            <!--<resource>-->
-            <!--<targetPath>/</targetPath>-->
-            <!--<directory>${project.build.directory}</directory>-->
-            <!--<include>${project.build.finalName}.jar</include>-->
-            <!--</resource>-->
-            <!--</resources>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.11</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>./</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 
 </project>
