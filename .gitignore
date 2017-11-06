@@ -4,4 +4,5 @@
 !/pom.xml
 !/Dockerfile
 !/Jenkinsfile
+!/deliver.sh
 !/README.md
