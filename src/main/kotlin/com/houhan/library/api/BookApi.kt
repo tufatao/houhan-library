@@ -2,6 +2,7 @@ package com.houhan.library.api
 
 import com.houhan.library.element.BookQueryUnit
 import com.houhan.library.entity.Book
+import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
 import com.houhan.library.web.ResponseBean
@@ -9,7 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -30,11 +30,15 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book): ResponseBean<Long?> {
-        println("book-save")
+    fun save(@ModelAttribute @NotNull book: String): ResponseBean<Long?> {
+        log.info("book-save")
+        var bookTemp: Book? = JsonUtil.json2Obj(book, Book::class.java)
         try {
-            val book = bookService.save(book)
-            return ResponseBean(book!!.id)
+            bookTemp?.let {
+                val book = bookService.save(bookTemp)
+                return ResponseBean(book!!.id)
+            }
+            return ResponseBean(-1)
         } catch (e: RuntimeException) {
             log.info(e.message)
             return ResponseBean(e)
@@ -42,8 +46,8 @@ class BookApi {
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<Book?> {
-        println("book-detail")
+    fun detail(@PathVariable @NotNull id: Long): ResponseBean<Book?> {
+        log.info("book-detail")
         val book: Book? = bookRepo.findOne(id)
         book?.let {
 
@@ -56,23 +60,22 @@ class BookApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute bookQueryUnit: BookQueryUnit,
-            model: Model): ResponseBean<Page<Book>> {
-        println("book-list")
+            @ModelAttribute bookQueryUnit: BookQueryUnit): ResponseBean<Page<Book>> {
+        log.info("book-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
 
         return ResponseBean(bookPage)
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
-        println("book-update")
+    fun update(@RequestParam @NotNull book: String): String {
+        log.info("book-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam @NotNull id: Long): String {
-        println("book-delete")
+        log.info("book-delete")
         bookRepo.delete(id)
         return "redirect:/apply"
     }

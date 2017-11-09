@@ -7,7 +7,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -27,7 +26,7 @@ class DepartmentApi {
 
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Int): ResponseBean<Department?> {
-        println("department-detail")
+        log.info("department-detail")
         val department: Department? = departmentService.one(id)
         return ResponseBean(department)
     }
@@ -35,15 +34,14 @@ class DepartmentApi {
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
-            @RequestParam pageSize: Int = 10,
-            model: Model): ResponseBean<Page<Department>> {
+            @RequestParam pageSize: Int = 10): ResponseBean<Page<Department>> {
         val deptList: Page<Department> = departmentService.list(pageIndex, pageSize)
         return ResponseBean(deptList)
     }
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull department: Department): ResponseBean<Int?> {
-        println("department-save")
+        log.info("department-save")
         try {
             val department = departmentService.save(department)
             return ResponseBean(department!!.id)
@@ -55,13 +53,13 @@ class DepartmentApi {
 
     @PutMapping()
     fun update(@PathVariable id: Int): String {
-        println("department-update")
+        log.info("department-update")
         return ""
     }
 
     @DeleteMapping()
     fun delete(@PathVariable @NotNull id: Int): String {
-        println("department-delete")
+        log.info("department-delete")
         return ""
     }
 

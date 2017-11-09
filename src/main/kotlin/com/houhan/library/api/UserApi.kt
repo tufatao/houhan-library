@@ -9,7 +9,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -36,8 +35,8 @@ class UserApi {
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<User?> {
-        println("user-detail")
+    fun detail(@PathVariable @NotNull id: Long): ResponseBean<User?> {
+        log.info("user-detail")
         val user: User? = userRepo.findOne(id)
         user?.let {
 
@@ -50,8 +49,7 @@ class UserApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute userQueryUnit: UserQueryUnit,
-            model: Model): ResponseBean<Page<User>> {
+            @ModelAttribute userQueryUnit: UserQueryUnit): ResponseBean<Page<User>> {
         val applyPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         return ResponseBean(applyPage)
     }

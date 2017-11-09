@@ -28,7 +28,7 @@ class BorrowRecordController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): String {
         var result = ""
-        println("borrowRecord-detail")
+        log.info("borrowRecord-detail")
         val borrowRecord: BorrowRecord? = borrowRecordService.one(id)
         borrowRecord?.let {
             model.addAttribute("borrowRecord", borrowRecord)
@@ -43,7 +43,7 @@ class BorrowRecordController {
             @RequestParam pageSize: Int = 10,
             @RequestParam borrowQueryUnit: BorrowQueryUnit,
             model: Model): String {
-        println("apply-list")
+        log.info("apply-list")
 
         val borrowPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
         model.addAttribute("borrowPage", borrowPage)
@@ -52,7 +52,7 @@ class BorrowRecordController {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
-        println("borrowRecord-save")
+        log.info("borrowRecord-save")
         val borrowRecord: BorrowRecord? = borrowRecordService.save(borrowRecord)
         borrowRecord?.let {
             model.addAttribute("borrowRecord", borrowRecord)
@@ -63,20 +63,20 @@ class BorrowRecordController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
-        println("borrowRecord-update")
+        log.info("borrowRecord-update")
         return "redirect:/borrowRecord"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Long): String {
-        println("borrowRecord-delete")
+        log.info("borrowRecord-delete")
         borrowRecordService.delete(id)
         return "redirect:/borrowRecord"
     }
 
     @GetMapping("/toadd")
     fun toAdd(): String {
-        println("borrowRecord-toAdd")
+        log.info("borrowRecord-toAdd")
         return "/borrowRecord/borrowRecordadd"
     }
 }

@@ -27,7 +27,7 @@ class DepartmentController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Int, model: Model): String {
         var result = ""
-        println("department-detail")
+        log.info("department-detail")
         val department: Department? = departmentService.one(id)
         department?.let {
             model.addAttribute("department", department)
@@ -41,7 +41,7 @@ class DepartmentController {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             model: Model): String {
-        println("department-list")
+        log.info("department-list")
         val deptList: Page<Department> = departmentService.list(pageIndex, pageSize)
         model.addAttribute("deptList", deptList)
         return "/department/departmentlist"
@@ -49,7 +49,7 @@ class DepartmentController {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull department: Department, model: Model): String {
-        println("department-save")
+        log.info("department-save")
         val dept: Department? = departmentService.save(department)
         dept?.let {
             model.addAttribute("department", dept)
@@ -60,20 +60,20 @@ class DepartmentController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull department: Department, model: Model): String {
-        println("department-update")
+        log.info("department-update")
         return "redirect:/department"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Int): String {
-        println("department-delete")
+        log.info("department-delete")
         departmentService.delete(id)
         return "redirect:/department"
     }
 
     @GetMapping("/toadd")
     fun toAdd(): String {
-        println("department-toAdd")
+        log.info("department-toAdd")
         return "/department/departmentadd"
     }
 }

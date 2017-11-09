@@ -14,7 +14,16 @@ spring:
     # disable cache for dev
   thymeleaf:
     cache: true
+  application:
+    name: houhan-library
     # basic security
 security:
   basic:
     enabled: false
+
+#日志配置
+logging:
+  file: /data/logs/${spring.application.name}.log
+  level: error
+#  外部日志配置
+#  config: classpath:logback-spring.xml

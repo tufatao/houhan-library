@@ -9,7 +9,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -37,8 +36,7 @@ class ApplyRecordApi {
                     @RequestParam @NotNull result: Int,
                     @RequestParam @NotNull reviewRemark: String,
                     @RequestParam userId: Long,
-                    @RequestParam bookId: Long,
-                    model: Model): ResponseBean<ApplyRecord> {
+                    @RequestParam bookId: Long): ResponseBean<ApplyRecord> {
         val applyRecord = applyRecordService.handleApply(applyId, result, reviewRemark, userId, bookId)
 
         return ResponseBean(applyRecord)
@@ -52,8 +50,7 @@ class ApplyRecordApi {
                     @RequestParam @NotNull applyRemark: String,
                     @RequestParam @NotNull userId: Long,
                     @RequestParam bookId: Long,
-                    @RequestParam borrowId: Long,
-                    model: Model): ResponseBean<Long> {
+                    @RequestParam borrowId: Long): ResponseBean<Long> {
         try {
             val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
             return ResponseBean(applyRecord.id)
@@ -68,8 +65,8 @@ class ApplyRecordApi {
      * 通过id获取ApplyRecord
      */
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<ApplyRecord?> {
-        println("apply-detail")
+    fun detail(@PathVariable @NotNull id: Long): ResponseBean<ApplyRecord?> {
+        log.info("apply-detail")
         val applyRecord: ApplyRecord? = applyRecordRepo.findOne(id)
         applyRecord?.let {
 
@@ -85,9 +82,8 @@ class ApplyRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute applyQueryUnit: ApplyQueryUnit,
-            model: Model): ResponseBean<Page<ApplyRecord>> {
-        println("apply-list")
+            @ModelAttribute applyQueryUnit: ApplyQueryUnit): ResponseBean<Page<ApplyRecord>> {
+        log.info("apply-list")
 
         val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, applyQueryUnit)
 
@@ -95,14 +91,14 @@ class ApplyRecordApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord, model: Model): String {
-        println("apply-update")
+    fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord): String {
+        log.info("apply-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam id: Long): String {
-        println("apply-delete")
+        log.info("apply-delete")
         applyRecordRepo.delete(id)
         return "redirect:/apply"
     }

@@ -35,7 +35,7 @@ class BookController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): String {
         var result = ""
-        println("book-detail")
+        log.info("book-detail")
         val book: Book? = bookService.one(id)
         book?.let {
             model.addAttribute("book", book)
@@ -50,7 +50,7 @@ class BookController {
             @RequestParam pageSize: Int = 10,
             @ModelAttribute bookQueryUnit: BookQueryUnit,
             model: Model): String {
-        println("apply-list")
+        log.info("apply-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
         model.addAttribute("bookPage", bookPage)
         return "/book/booklist"
@@ -60,7 +60,7 @@ class BookController {
     fun save(@ModelAttribute @NotNull book: Book,
              @RequestParam catId: Int,
              model: Model): String {
-        println("book-save")
+        log.info("book-save")
         book.category = categoryService.one(catId)!!
         val book: Book? = bookService.save(book)
         book?.let {
@@ -72,20 +72,20 @@ class BookController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
-        println("book-update")
+        log.info("book-update")
         return "redirect:/book"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Long): String {
-        println("book-delete")
+        log.info("book-delete")
         bookService.delete(id)
         return "redirect:/book"
     }
 
     @GetMapping("/toadd")
     fun toAdd(model: Model): String {
-        println("book-toAdd")
+        log.info("book-toAdd")
         val categoryList: List<Category> = categoryRepo.findAll()
         model.addAttribute("categoryList", categoryList)
         return "/book/bookadd"

@@ -27,7 +27,7 @@ class CategoryController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Int, model: Model): String {
         var result = ""
-        println("category-detail")
+        log.info("category-detail")
         val category: Category? = categoryService.one(id)
         category?.let {
             model.addAttribute("category", category)
@@ -41,7 +41,7 @@ class CategoryController {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             model: Model): String {
-        println("category-list")
+        log.info("category-list")
         val categoryList: Page<Category> = categoryService.list(pageIndex, pageSize)
         model.addAttribute("categoryList", categoryList)
         return "/category/categorylist"
@@ -49,7 +49,7 @@ class CategoryController {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull category: Category, model: Model): String {
-        println("category-save")
+        log.info("category-save")
         val category: Category? = categoryService.save(category)
         category?.let {
             model.addAttribute("category", category)
@@ -60,20 +60,20 @@ class CategoryController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull category: Category, model: Model): String {
-        println("category-update")
+        log.info("category-update")
         return "redirect:/category"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Int): String {
-        println("category-delete")
+        log.info("category-delete")
         categoryService.delete(id)
         return "redirect:/category"
     }
 
     @GetMapping("/toadd")
     fun toAdd(): String {
-        println("category-toAdd")
+        log.info("category-toAdd")
         return "/category/categoryadd"
     }
 }

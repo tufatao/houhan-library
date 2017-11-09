@@ -31,7 +31,7 @@ class BorrowRecordApi {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<Long?> {
-        println("borrowRecord-save")
+        log.info("borrowRecord-save")
         try {
             val borrowRecord = borrowRecordService.save(borrowRecord)
             return ResponseBean(borrowRecord!!.id)
@@ -42,8 +42,8 @@ class BorrowRecordApi {
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Long, model: Model): ResponseBean<BorrowRecord?> {
-        println("borrow-detail")
+    fun detail(@PathVariable @NotNull id: Long): ResponseBean<BorrowRecord?> {
+        log.info("borrow-detail")
         val borrowRecord: BorrowRecord? = borrowRecordRepo.findOne(id)
         borrowRecord?.let {
 
@@ -58,7 +58,7 @@ class BorrowRecordApi {
             @RequestParam pageSize: Int = 10,
             @ModelAttribute borrowQueryUnit: BorrowQueryUnit,
             model: Model): ResponseBean<Page<BorrowRecord>> {
-        println("borrow-list")
+        log.info("borrow-list")
 
         val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
 
@@ -66,14 +66,14 @@ class BorrowRecordApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord, model: Model): String {
-        println("borrow-update")
+    fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord): String {
+        log.info("borrow-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam @NotNull id: Long): String {
-        println("borrow-delete")
+        log.info("borrow-delete")
         borrowRecordRepo.delete(id)
         return "redirect:/apply"
     }

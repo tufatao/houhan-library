@@ -27,7 +27,7 @@ class RoleController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Int, model: Model): String {
         var result = ""
-        println("role-detail")
+        log.info("role-detail")
         val role: Role? = roleService.one(id)
         role?.let {
             model.addAttribute("role", role)
@@ -41,7 +41,7 @@ class RoleController {
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
             model: Model): String {
-        println("role-list")
+        log.info("role-list")
         val roleList: Page<Role> = roleService.list(pageIndex, pageSize)
         model.addAttribute("roleList", roleList)
         return "/role/rolelist"
@@ -49,7 +49,7 @@ class RoleController {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull role: Role, model: Model): String {
-        println("role-save")
+        log.info("role-save")
         val dept: Role? = roleService.save(role)
         dept?.let {
             model.addAttribute("role", dept)
@@ -60,20 +60,20 @@ class RoleController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull role: Role, model: Model): String {
-        println("role-update")
+        log.info("role-update")
         return "redirect:/role"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Int): String {
-        println("role-delete")
+        log.info("role-delete")
         roleService.delete(id)
         return "redirect:/role"
     }
 
     @GetMapping("/toadd")
     fun toAdd(): String {
-        println("role-toAdd")
+        log.info("role-toAdd")
         return "/role/roleadd"
     }
 }

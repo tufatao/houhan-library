@@ -44,7 +44,7 @@ class UserController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): String {
         var result = ""
-        println("user-detail")
+        log.info("user-detail")
         val user: User? = userRepo.findOne(id)
         user?.let {
             model.addAttribute("user", user)
@@ -72,7 +72,7 @@ class UserController {
             @RequestParam deptId: Int,
             model: Model
     ): String {
-        println("user-save")
+        log.info("user-save")
         user.department = departmentService.one(deptId)!!
         user.role = roleService?.one("新秀")!!
         userBorrowRepo?.saveAndFlush(user.userBorrow)
@@ -86,13 +86,13 @@ class UserController {
 
     @PutMapping()
     fun update(@RequestBody user: User): String {
-        println("user-update")
+        log.info("user-update")
         return "redirect:/user"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Long): String {
-        println("user-delete")
+        log.info("user-delete")
         userRepo.delete(id)
         return "redirect:/user"
     }

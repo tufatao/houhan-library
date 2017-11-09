@@ -8,7 +8,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -30,7 +29,7 @@ class CategoryApi {
 
     @PostMapping()
     fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Int?> {
-        println("category-save")
+        log.info("category-save")
         try {
             val category = categoryService.save(category)
             return ResponseBean(category!!.id)
@@ -41,8 +40,8 @@ class CategoryApi {
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int, model: Model): ResponseBean<Category?> {
-        println("apply-detail")
+    fun detail(@PathVariable @NotNull id: Int): ResponseBean<Category?> {
+        log.info("apply-detail")
         val category: Category? = categoryRepo.findOne(id)
         category?.let {
 
@@ -54,9 +53,8 @@ class CategoryApi {
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
-            @RequestParam pageSize: Int = 10,
-            model: Model): ResponseBean<Page<Category>> {
-        println("apply-list")
+            @RequestParam pageSize: Int = 10): ResponseBean<Page<Category>> {
+        log.info("apply-list")
 
         val applyPage: Page<Category> = categoryService.list(pageIndex, pageSize)
 
@@ -64,14 +62,14 @@ class CategoryApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull category: Category, model: Model): String {
-        println("apply-update")
+    fun update(@ModelAttribute @NotNull category: Category): String {
+        log.info("apply-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam @NotNull id: Int): String {
-        println("apply-delete")
+        log.info("apply-delete")
         categoryRepo.delete(id)
         return "redirect:/apply"
     }

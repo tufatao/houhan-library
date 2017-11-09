@@ -8,7 +8,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
@@ -31,7 +30,7 @@ class RoleApi {
 
     @PostMapping()
     fun save(@ModelAttribute @Valid @NotNull role: Role): ResponseBean<Int?> {
-        println("role-save")
+        log.info("role-save")
         try {
             val role = roleService.save(role)
             return ResponseBean(role!!.id)
@@ -42,8 +41,8 @@ class RoleApi {
     }
 
     @GetMapping("/{id}")
-    fun detail(@PathVariable @NotNull id: Int, model: Model): ResponseBean<Role?> {
-        println("apply-detail")
+    fun detail(@PathVariable @NotNull id: Int): ResponseBean<Role?> {
+        log.info("apply-detail")
         val role: Role? = roleRepo.findOne(id)
         role?.let {
 
@@ -55,9 +54,8 @@ class RoleApi {
     @PostMapping("/query")
     fun list(
             @RequestParam pageIndex: Int = 1,
-            @RequestParam pageSize: Int = 10,
-            model: Model): ResponseBean<Page<Role>> {
-        println("apply-list")
+            @RequestParam pageSize: Int = 10): ResponseBean<Page<Role>> {
+        log.info("apply-list")
 
         val applyPage: Page<Role> = roleService.list(pageIndex, pageSize)
 
@@ -65,14 +63,14 @@ class RoleApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull role: Role, model: Model): String {
-        println("apply-update")
+    fun update(@ModelAttribute @NotNull role: Role): String {
+        log.info("apply-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@RequestParam @NotNull id: Int): String {
-        println("apply-delete")
+        log.info("apply-delete")
         roleRepo.delete(id)
         return "redirect:/apply"
     }

@@ -60,7 +60,7 @@ class ApplyRecordController {
     @GetMapping("/{id}")
     fun detail(@PathVariable @NotNull id: Long, model: Model): String {
         var result = ""
-        println("apply-detail")
+        log.info("apply-detail")
         val applyRecord: ApplyRecord? = applyRecordService.one(id)
         applyRecord?.let {
             model.addAttribute("apply", applyRecord)
@@ -75,7 +75,7 @@ class ApplyRecordController {
             @RequestParam pageSize: Int = 10,
             @ModelAttribute applyQueryUnit: ApplyQueryUnit,
             model: Model): String {
-        println("apply-list")
+        log.info("apply-list")
 
         val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, applyQueryUnit)
         model.addAttribute("applyPage", applyPage)
@@ -85,20 +85,20 @@ class ApplyRecordController {
 
     @PutMapping()
     fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord, model: Model): String {
-        println("apply-update")
+        log.info("apply-update")
         return "redirect:/apply"
     }
 
     @DeleteMapping()
     fun delete(@PathVariable id: Long): String {
-        println("apply-delete")
+        log.info("apply-delete")
         applyRecordService.delete(id)
         return "redirect:/apply"
     }
 
     @GetMapping("/toadd")
     fun toAdd(): String {
-        println("apply-toAdd")
+        log.info("apply-toAdd")
         return "/apply/applyadd"
     }
 }
