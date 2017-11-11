@@ -1,6 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.Category
+import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.CategoryRepo
 import com.houhan.library.service.CategoryService
 import com.houhan.library.web.ResponseBean
@@ -28,11 +29,16 @@ class CategoryApi {
     lateinit var categoryRepo: CategoryRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: Category): ResponseBean<Int?> {
+    fun save(@ModelAttribute @NotNull category: String): ResponseBean<Int?> {
         log.info("category-save")
+        var categoryTemp: Category? = JsonUtil.json2Obj(category, Category::class.java)
         try {
-            val category = categoryService.save(category)
-            return ResponseBean(category!!.id)
+            categoryTemp?.let {
+                val category = categoryService.save(categoryTemp)
+                return ResponseBean(category!!.id)
+            }
+//            todo 待优化
+            return ResponseBean(-1)
         } catch (e: RuntimeException) {
             log.info(e.message)
             return ResponseBean(e)

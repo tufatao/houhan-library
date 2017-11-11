@@ -1,6 +1,7 @@
 package com.houhan.library.api
 
 import com.houhan.library.entity.Role
+import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.RoleRepo
 import com.houhan.library.service.RoleService
 import com.houhan.library.web.ResponseBean
@@ -29,11 +30,16 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @Valid @NotNull role: Role): ResponseBean<Int?> {
+    fun save(@ModelAttribute @Valid @NotNull role: String): ResponseBean<Int?> {
         log.info("role-save")
+        var roleTemp: Role? = JsonUtil.json2Obj(role, Role::class.java)
         try {
-            val role = roleService.save(role)
-            return ResponseBean(role!!.id)
+            roleTemp?.let {
+                val role = roleService.save(roleTemp)
+                return ResponseBean(role!!.id)
+            }
+//            todo 待优化
+            return ResponseBean(-1)
         } catch (e: RuntimeException) {
             log.info(e.message)
             return ResponseBean(e)

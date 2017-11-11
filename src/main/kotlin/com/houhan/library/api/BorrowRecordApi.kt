@@ -2,6 +2,7 @@ package com.houhan.library.api
 
 import com.houhan.library.element.BorrowQueryUnit
 import com.houhan.library.entity.BorrowRecord
+import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
 import com.houhan.library.web.ResponseBean
@@ -30,11 +31,16 @@ class BorrowRecordApi {
     lateinit var borrowRecordRepo: BorrowRecordRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: BorrowRecord): ResponseBean<Long?> {
+    fun save(@ModelAttribute @NotNull borrowRecord: String): ResponseBean<Long?> {
         log.info("borrowRecord-save")
+        var borrowRecordTemp: BorrowRecord? = JsonUtil.json2Obj(borrowRecord, BorrowRecord::class.java)
         try {
-            val borrowRecord = borrowRecordService.save(borrowRecord)
-            return ResponseBean(borrowRecord!!.id)
+            borrowRecordTemp?.let {
+                val borrowRecord = borrowRecordService.save(borrowRecordTemp)
+                return ResponseBean(borrowRecord!!.id)
+            }
+//            todo 待优化
+            return ResponseBean(-1)
         } catch (e: RuntimeException) {
             log.info(e.message)
             return ResponseBean(e)
