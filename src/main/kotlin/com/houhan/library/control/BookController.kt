@@ -48,7 +48,7 @@ class BookController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute bookQueryUnit: BookQueryUnit,
+            @RequestParam bookQueryUnit: BookQueryUnit,
             model: Model): String {
         log.info("apply-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
@@ -57,7 +57,7 @@ class BookController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: Book,
+    fun save(@RequestParam @NotNull book: Book,
              @RequestParam catId: Int,
              model: Model): String {
         log.info("book-save")
@@ -71,7 +71,7 @@ class BookController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull book: Book, model: Model): String {
+    fun update(@RequestParam @NotNull book: Book, model: Model): String {
         log.info("book-update")
         return "redirect:/book"
     }

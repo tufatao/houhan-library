@@ -48,7 +48,7 @@ class CategoryController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: Category, model: Model): String {
+    fun save(@RequestParam @NotNull category: Category, model: Model): String {
         log.info("category-save")
         val category: Category? = categoryService.save(category)
         category?.let {
@@ -59,7 +59,7 @@ class CategoryController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull category: Category, model: Model): String {
+    fun update(@RequestParam @NotNull category: Category, model: Model): String {
         log.info("category-update")
         return "redirect:/category"
     }

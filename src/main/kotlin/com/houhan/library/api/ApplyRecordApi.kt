@@ -82,7 +82,7 @@ class ApplyRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute applyQueryUnit: ApplyQueryUnit): ResponseBean<Page<ApplyRecord>> {
+            @RequestParam applyQueryUnit: ApplyQueryUnit): ResponseBean<Page<ApplyRecord>> {
         log.info("apply-list")
 
         val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, applyQueryUnit)
@@ -91,7 +91,7 @@ class ApplyRecordApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord): String {
+    fun update(@RequestParam @NotNull applyRecord: ApplyRecord): String {
         log.info("apply-update")
         return "redirect:/apply"
     }

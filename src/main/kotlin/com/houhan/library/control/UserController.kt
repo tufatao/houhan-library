@@ -57,7 +57,7 @@ class UserController {
     fun list(
             @PathVariable pageIndex: Int = 1,
             @PathVariable pageSize: Int = 10,
-            @ModelAttribute userQueryUnit: UserQueryUnit,
+            @RequestParam userQueryUnit: UserQueryUnit,
             model: Model): String {
         val userPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         model.addAttribute("userPage", userPage)
@@ -67,7 +67,7 @@ class UserController {
     @PostMapping()
     fun save(
             @Valid user: User,
-            //            @ModelAttribute user: User,
+            //            @RequestParam user: User,
             @RequestParam confirm_pw: String,
             @RequestParam deptId: Int,
             model: Model

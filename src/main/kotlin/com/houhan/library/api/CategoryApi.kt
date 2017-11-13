@@ -29,7 +29,7 @@ class CategoryApi {
     lateinit var categoryRepo: CategoryRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull category: String): ResponseBean<Int?> {
+    fun save(@RequestParam @NotNull category: String): ResponseBean<Int?> {
         log.info("category-save")
         var categoryTemp: Category? = JsonUtil.json2Obj(category, Category::class.java)
         try {
@@ -68,7 +68,7 @@ class CategoryApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull category: Category): String {
+    fun update(@RequestParam @NotNull category: Category): String {
         log.info("apply-update")
         return "redirect:/apply"
     }

@@ -48,7 +48,7 @@ class RoleController {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull role: Role, model: Model): String {
+    fun save(@RequestParam @NotNull role: Role, model: Model): String {
         log.info("role-save")
         val dept: Role? = roleService.save(role)
         dept?.let {
@@ -59,7 +59,7 @@ class RoleController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull role: Role, model: Model): String {
+    fun update(@RequestParam @NotNull role: Role, model: Model): String {
         log.info("role-update")
         return "redirect:/role"
     }

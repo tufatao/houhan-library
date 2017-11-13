@@ -30,7 +30,7 @@ class RoleApi {
     lateinit var roleRepo: RoleRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @Valid @NotNull role: String): ResponseBean<Int?> {
+    fun save(@RequestParam @Valid @NotNull role: String): ResponseBean<Int?> {
         log.info("role-save")
         var roleTemp: Role? = JsonUtil.json2Obj(role, Role::class.java)
         try {
@@ -69,7 +69,7 @@ class RoleApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull role: Role): String {
+    fun update(@RequestParam @NotNull role: Role): String {
         log.info("apply-update")
         return "redirect:/apply"
     }

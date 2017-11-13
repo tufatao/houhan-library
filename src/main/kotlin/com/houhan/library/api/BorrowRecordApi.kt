@@ -10,7 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.validation.constraints.NotNull
 
@@ -31,7 +30,7 @@ class BorrowRecordApi {
     lateinit var borrowRecordRepo: BorrowRecordRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull borrowRecord: String): ResponseBean<Long?> {
+    fun save(@RequestParam @NotNull borrowRecord: String): ResponseBean<Long?> {
         log.info("borrowRecord-save")
         var borrowRecordTemp: BorrowRecord? = JsonUtil.json2Obj(borrowRecord, BorrowRecord::class.java)
         try {
@@ -62,8 +61,7 @@ class BorrowRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute borrowQueryUnit: BorrowQueryUnit,
-            model: Model): ResponseBean<Page<BorrowRecord>> {
+            @RequestParam borrowQueryUnit: BorrowQueryUnit): ResponseBean<Page<BorrowRecord>> {
         log.info("borrow-list")
 
         val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
@@ -72,7 +70,7 @@ class BorrowRecordApi {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull borrowRecord: BorrowRecord): String {
+    fun update(@RequestParam @NotNull borrowRecord: BorrowRecord): String {
         log.info("borrow-update")
         return "redirect:/apply"
     }

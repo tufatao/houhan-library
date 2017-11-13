@@ -29,7 +29,7 @@ class UserApi {
     lateinit var userRepo: UserRepo
 
     @PostMapping("/update")
-    fun update(@ModelAttribute @NotNull user: User): ResponseBean<Unit> {
+    fun update(@RequestParam @NotNull user: User): ResponseBean<Unit> {
         userRepo.save(user)
         return ResponseBean()
     }
@@ -49,7 +49,7 @@ class UserApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute userQueryUnit: UserQueryUnit): ResponseBean<Page<User>> {
+            @RequestParam userQueryUnit: UserQueryUnit): ResponseBean<Page<User>> {
         val applyPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         return ResponseBean(applyPage)
     }

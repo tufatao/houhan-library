@@ -30,7 +30,7 @@ class BookApi {
     lateinit var bookRepo: BookRepo
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull book: String): ResponseBean<Long?> {
+    fun save(@RequestParam @NotNull book: String): ResponseBean<Long?> {
         log.info("book-save")
         var bookTemp: Book? = JsonUtil.json2Obj(book, Book::class.java)
         try {
@@ -60,7 +60,7 @@ class BookApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute bookQueryUnit: BookQueryUnit): ResponseBean<Page<Book>> {
+            @RequestParam bookQueryUnit: BookQueryUnit): ResponseBean<Page<Book>> {
         log.info("book-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
 

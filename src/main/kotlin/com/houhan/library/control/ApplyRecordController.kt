@@ -73,7 +73,7 @@ class ApplyRecordController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @ModelAttribute applyQueryUnit: ApplyQueryUnit,
+            @RequestParam applyQueryUnit: ApplyQueryUnit,
             model: Model): String {
         log.info("apply-list")
 
@@ -84,7 +84,7 @@ class ApplyRecordController {
     }
 
     @PutMapping()
-    fun update(@ModelAttribute @NotNull applyRecord: ApplyRecord, model: Model): String {
+    fun update(@RequestParam @NotNull applyRecord: ApplyRecord, model: Model): String {
         log.info("apply-update")
         return "redirect:/apply"
     }

@@ -41,7 +41,7 @@ class DepartmentApi {
     }
 
     @PostMapping()
-    fun save(@ModelAttribute @NotNull department: String): ResponseBean<Int?> {
+    fun save(@RequestParam @NotNull department: String): ResponseBean<Int?> {
         log.info("department-save")
         var departmentTemp: Department? = JsonUtil.json2Obj(department, Department::class.java)
         try {
