@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @EnableTransactionManagement
 @SpringBootApplication
-class HouhanLibraryApplication
+class HouhanLibraryApp
 
 fun main(args: Array<String>) {
-    SpringApplication.run(HouhanLibraryApplication::class.java, *args)
+    SpringApplication.run(HouhanLibraryApp::class.java, *args)
 }

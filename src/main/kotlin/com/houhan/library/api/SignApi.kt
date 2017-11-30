@@ -4,7 +4,7 @@ import com.houhan.library.entity.User
 import com.houhan.library.helper.DateUtil
 import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.UserService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,9 +37,9 @@ class SignApi {
               response: HttpServletResponse): ResponseBean<Map<String, Any>> {
         val countNickName = userRepo.countByNickName(nickName)
         val responseBean: ResponseBean<Map<String, Any>> = ResponseBean()
-        responseBean.code = ResponseBean.FAIL
+        responseBean.code = "1";
         if (countNickName < 1) {
-            responseBean.msg = "登录, 用户名($nickName)不存在!"
+            responseBean.message = "登录, 用户名($nickName)不存在!"
             return responseBean
         } else {
             val user = userService.loginCheck(nickName, pw)
@@ -51,7 +51,7 @@ class SignApi {
                 val logParam = mapOf("name" to user.name, "nickName" to nickName, "roleName" to user.role.name, "userId" to user.id)
                 return ResponseBean(logParam)
             } else {
-                responseBean.msg = "登录, 用户($nickName)密码错误!"
+                responseBean.message = "登录, 用户($nickName)密码错误!"
                 return responseBean
             }
         }
@@ -64,15 +64,15 @@ class SignApi {
         val countEmail = userRepo.countByEmail(user.email)
         val countMobile = userRepo.countByMobile(user.mobile)
         val responseBean: ResponseBean<String> = ResponseBean()
-        responseBean.code = ResponseBean.FAIL
+        responseBean.code = "1"
         if (countNickName > 0) {
-            responseBean.msg = "用户名($nickName)已存在!"
+            responseBean.message = "用户名($nickName)已存在!"
             return responseBean
         } else if (countEmail > 0) {
-            responseBean.msg = "email已存在!"
+            responseBean.message = "email已存在!"
             return responseBean
         } else if (countMobile > 0) {
-            responseBean.msg = "手机号已存在!"
+            responseBean.message = "手机号已存在!"
             return responseBean
         } else {
             userRepo.save(user)

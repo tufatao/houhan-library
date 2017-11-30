@@ -48,7 +48,7 @@ class UserController {
         val user: User? = userRepo.findOne(id)
         user?.let {
             model.addAttribute("user", user)
-            result = "/user/userlist"
+            result = "/user/userdetail"
         } ?: log.info("user-detail: User(id = $id) not found")
         return result
     }
@@ -57,7 +57,7 @@ class UserController {
     fun list(
             @PathVariable pageIndex: Int = 1,
             @PathVariable pageSize: Int = 10,
-            @RequestParam userQueryUnit: UserQueryUnit,
+            @ModelAttribute userQueryUnit: UserQueryUnit,
             model: Model): String {
         val userPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         model.addAttribute("userPage", userPage)

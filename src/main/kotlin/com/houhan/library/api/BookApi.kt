@@ -5,7 +5,7 @@ import com.houhan.library.entity.Book
 import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.BookRepo
 import com.houhan.library.service.BookService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,16 +33,11 @@ class BookApi {
     fun save(@RequestParam @NotNull book: String): ResponseBean<Long?> {
         log.info("book-save")
         var bookTemp: Book? = JsonUtil.json2Obj(book, Book::class.java)
-        try {
-            bookTemp?.let {
-                val book = bookService.save(bookTemp)
-                return ResponseBean(book!!.id)
-            }
-            return ResponseBean(-1)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
+        bookTemp?.let {
+            val book = bookService.save(bookTemp)
+            return ResponseBean(book!!.id)
         }
+        return ResponseBean(-1)
     }
 
     @GetMapping("/{id}")
@@ -60,7 +55,7 @@ class BookApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam bookQueryUnit: BookQueryUnit): ResponseBean<Page<Book>> {
+            @ModelAttribute bookQueryUnit: BookQueryUnit): ResponseBean<Page<Book>> {
         log.info("book-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)
 

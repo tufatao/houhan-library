@@ -4,7 +4,7 @@ import com.houhan.library.element.UserQueryUnit
 import com.houhan.library.entity.User
 import com.houhan.library.repository.UserRepo
 import com.houhan.library.service.UserService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,7 +49,7 @@ class UserApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam userQueryUnit: UserQueryUnit): ResponseBean<Page<User>> {
+            @ModelAttribute userQueryUnit: UserQueryUnit): ResponseBean<Page<User>> {
         val applyPage: Page<User> = userService.list(pageIndex, pageSize, userQueryUnit)
         return ResponseBean(applyPage)
     }

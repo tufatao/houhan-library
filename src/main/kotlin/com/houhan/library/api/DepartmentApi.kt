@@ -3,7 +3,7 @@ package com.houhan.library.api
 import com.houhan.library.entity.Department
 import com.houhan.library.helper.JsonUtil
 import com.houhan.library.service.DepartmentService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -44,17 +44,12 @@ class DepartmentApi {
     fun save(@RequestParam @NotNull department: String): ResponseBean<Int?> {
         log.info("department-save")
         var departmentTemp: Department? = JsonUtil.json2Obj(department, Department::class.java)
-        try {
-            departmentTemp?.let {
-                val department = departmentService.save(departmentTemp)
-                return ResponseBean(department!!.id)
-            }
-//            todo 待优化
-            return ResponseBean(-1)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
+        departmentTemp?.let {
+            val department = departmentService.save(departmentTemp)
+            return ResponseBean(department!!.id)
         }
+//            todo 待优化
+        return ResponseBean(-1)
     }
 
     @PutMapping()

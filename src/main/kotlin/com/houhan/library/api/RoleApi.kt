@@ -4,7 +4,7 @@ import com.houhan.library.entity.Role
 import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.RoleRepo
 import com.houhan.library.service.RoleService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,17 +33,12 @@ class RoleApi {
     fun save(@RequestParam @Valid @NotNull role: String): ResponseBean<Int?> {
         log.info("role-save")
         var roleTemp: Role? = JsonUtil.json2Obj(role, Role::class.java)
-        try {
-            roleTemp?.let {
-                val role = roleService.save(roleTemp)
-                return ResponseBean(role!!.id)
-            }
-//            todo 待优化
-            return ResponseBean(-1)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
+        roleTemp?.let {
+            val role = roleService.save(roleTemp)
+            return ResponseBean(role!!.id)
         }
+//            todo 待优化
+        return ResponseBean(-1)
     }
 
     @GetMapping("/{id}")

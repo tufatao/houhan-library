@@ -1,8 +1,10 @@
 package com.houhan.library
 
+import com.houhan.library.interceptor.MyUserDetails
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 
 /**
@@ -14,26 +16,30 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * *
  * @time 2017/9/25 16:08.
  */
-//@EnableWebSecurity
+@EnableWebSecurity
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+    @Autowired
+    lateinit var myUserDetails: MyUserDetails
 
-    @Throws(Exception::class)
+    @Throws(RuntimeException::class)
     override fun configure(http: HttpSecurity) {
         http
+//                .addFilter() //增加filter
                 .authorizeRequests()
-                .antMatchers("/css/**", "/index").permitAll()
-                .antMatchers("/apply/handle/**").hasRole("ADMIN")
-                .antMatchers("/**").hasRole("USER")
+//                .antMatchers("/").permitAll()
+                .antMatchers("/apply/handle/**").hasAnyRole("宗师", "盟主")
+//                .antMatchers("/**").hasRole("USER")
+//                .regexMatchers("/.+").hasAnyRole("新秀", "少侠", "大侠", "掌门")
+                .antMatchers("/").hasAnyRole("新秀", "少侠", "大侠", "掌门")
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login-error")
     }
 
     @Autowired
-    @Throws(Exception::class)
+    @Throws(RuntimeException::class)
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
-        auth
-                .inMemoryAuthentication()
-                .withUser("visitor").password("123456").roles("USER")
+        auth.userDetailsService(myUserDetails)
     }
+
 }

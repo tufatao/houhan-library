@@ -4,7 +4,7 @@ import com.houhan.library.entity.Category
 import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.CategoryRepo
 import com.houhan.library.service.CategoryService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -32,17 +32,12 @@ class CategoryApi {
     fun save(@RequestParam @NotNull category: String): ResponseBean<Int?> {
         log.info("category-save")
         var categoryTemp: Category? = JsonUtil.json2Obj(category, Category::class.java)
-        try {
-            categoryTemp?.let {
-                val category = categoryService.save(categoryTemp)
-                return ResponseBean(category!!.id)
-            }
-//            todo 待优化
-            return ResponseBean(-1)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
+        categoryTemp?.let {
+            val category = categoryService.save(categoryTemp)
+            return ResponseBean(category!!.id)
         }
+//            todo 待优化
+        return ResponseBean(-1)
     }
 
     @GetMapping("/{id}")

@@ -4,13 +4,17 @@ import com.houhan.library.helper.DateFormatUtil
 import com.houhan.library.helper.JsonUtil
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Suite
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.ActiveProfiles
 import java.util.*
 
-@RunWith(SpringRunner::class)
+//@Transactional
+@ActiveProfiles(value = "test")
+@RunWith(Suite::class)
+//@Suite.SuiteClasses({BeanMapUtilTest::class, GzipUtilTest::class, RsaSignTest::class})
 @SpringBootTest
 class HouhanLibraryApplicationTests {
     val log: Logger = LoggerFactory.getLogger(HouhanLibraryApplicationTests::class.java)

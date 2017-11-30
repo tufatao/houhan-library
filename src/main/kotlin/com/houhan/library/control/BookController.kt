@@ -39,7 +39,7 @@ class BookController {
         val book: Book? = bookService.one(id)
         book?.let {
             model.addAttribute("book", book)
-            result = "/book/booklist"
+            result = "/book/bookdetail"
         } ?: log.info("book-detail: Book(id = $id) not found")
         return result
     }
@@ -48,7 +48,7 @@ class BookController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam bookQueryUnit: BookQueryUnit,
+            @ModelAttribute bookQueryUnit: BookQueryUnit,
             model: Model): String {
         log.info("apply-list")
         val bookPage: Page<Book> = bookService.list(pageIndex, pageSize, bookQueryUnit)

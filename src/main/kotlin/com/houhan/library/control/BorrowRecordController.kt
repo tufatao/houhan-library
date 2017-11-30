@@ -41,7 +41,7 @@ class BorrowRecordController {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam borrowQueryUnit: BorrowQueryUnit,
+            @ModelAttribute borrowQueryUnit: BorrowQueryUnit,
             model: Model): String {
         log.info("apply-list")
 

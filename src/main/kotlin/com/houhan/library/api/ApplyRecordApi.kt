@@ -4,7 +4,8 @@ import com.houhan.library.element.ApplyQueryUnit
 import com.houhan.library.entity.ApplyRecord
 import com.houhan.library.repository.ApplyRecordRepo
 import com.houhan.library.service.ApplyRecordService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
+import com.houhan.library.support.resp.ResponseBeanUtil
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +40,7 @@ class ApplyRecordApi {
                     @RequestParam bookId: Long): ResponseBean<ApplyRecord> {
         val applyRecord = applyRecordService.handleApply(applyId, result, reviewRemark, userId, bookId)
 
-        return ResponseBean(applyRecord)
+        return ResponseBeanUtil.success(applyRecord)
     }
 
     /**
@@ -51,13 +52,8 @@ class ApplyRecordApi {
                     @RequestParam @NotNull userId: Long,
                     @RequestParam bookId: Long,
                     @RequestParam borrowId: Long): ResponseBean<Long> {
-        try {
-            val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
-            return ResponseBean(applyRecord.id)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
-        }
+        val applyRecord = applyRecordService.lanchApply(type, applyRemark, userId, bookId, borrowId)
+        return ResponseBeanUtil.success(applyRecord.id)
 //        return ResponseBean(applyRecord.id)
     }
 
@@ -72,7 +68,7 @@ class ApplyRecordApi {
 
         } ?: log.info("apply-detail: ApplyRecord(id = $id) not found")
 
-        return ResponseBean(applyRecord)
+        return ResponseBeanUtil.success(applyRecord)
     }
 
     /**
@@ -82,7 +78,7 @@ class ApplyRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam applyQueryUnit: ApplyQueryUnit): ResponseBean<Page<ApplyRecord>> {
+            @ModelAttribute applyQueryUnit: ApplyQueryUnit): ResponseBean<Page<ApplyRecord>> {
         log.info("apply-list")
 
         val applyPage: Page<ApplyRecord> = applyRecordService.list(pageIndex, pageSize, applyQueryUnit)

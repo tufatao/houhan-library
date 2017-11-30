@@ -16,15 +16,18 @@ spring:
     cache: false
   application:
     name: houhan-library
+#    开启AOP
+  aop:
+    auto: true
     # basic security
 security:
   basic:
-    enabled: false
+    enabled: true
 
 #日志配置
 logging:
   file: spring-dev.log
-  level: info
+  level: debug
 #  外部日志配置
 #  config: classpath:logback-spring.xml
 

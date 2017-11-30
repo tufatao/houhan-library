@@ -5,7 +5,7 @@ import com.houhan.library.entity.BorrowRecord
 import com.houhan.library.helper.JsonUtil
 import com.houhan.library.repository.BorrowRecordRepo
 import com.houhan.library.service.BorrowRecordService
-import com.houhan.library.web.ResponseBean
+import com.houhan.library.support.resp.ResponseBean
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,17 +33,12 @@ class BorrowRecordApi {
     fun save(@RequestParam @NotNull borrowRecord: String): ResponseBean<Long?> {
         log.info("borrowRecord-save")
         var borrowRecordTemp: BorrowRecord? = JsonUtil.json2Obj(borrowRecord, BorrowRecord::class.java)
-        try {
-            borrowRecordTemp?.let {
-                val borrowRecord = borrowRecordService.save(borrowRecordTemp)
-                return ResponseBean(borrowRecord!!.id)
-            }
-//            todo 待优化
-            return ResponseBean(-1)
-        } catch (e: RuntimeException) {
-            log.info(e.message)
-            return ResponseBean(e)
+        borrowRecordTemp?.let {
+            val borrowRecord = borrowRecordService.save(borrowRecordTemp)
+            return ResponseBean(borrowRecord!!.id)
         }
+//            todo 待优化
+        return ResponseBean(-1)
     }
 
     @GetMapping("/{id}")
@@ -61,7 +56,7 @@ class BorrowRecordApi {
     fun list(
             @RequestParam pageIndex: Int = 1,
             @RequestParam pageSize: Int = 10,
-            @RequestParam borrowQueryUnit: BorrowQueryUnit): ResponseBean<Page<BorrowRecord>> {
+            @ModelAttribute borrowQueryUnit: BorrowQueryUnit): ResponseBean<Page<BorrowRecord>> {
         log.info("borrow-list")
 
         val applyPage: Page<BorrowRecord> = borrowRecordService.list(pageIndex, pageSize, borrowQueryUnit)
